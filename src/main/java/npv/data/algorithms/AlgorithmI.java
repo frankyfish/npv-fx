@@ -34,6 +34,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
         queues.add(queue3);
 
         objectsList.sort(new TimeComparator());//sorting by time (bigger the first)
+        System.out.println("Results of sorting by time:");
         for (int i = 0; i < objectsList.size(); i++) {
             System.out.print(objectsList.get(i).getTime() + " ");
         }
@@ -69,7 +70,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
                     queue.addToQueue(objectsList.get(i));//adding MP to queue
                     queue.setDelta(queue.getDelta() - objectsList.get(i).getTime());//calculating time for que after adding
                     break;
-                } else if (j == queues.size() - 1 &&checkTimeLeftInQueues(objectsList.get(i))) {
+                } else if (j == queues.size() - 1 && checkTimeLeftInQueues(objectsList.get(i))) {
                     k = 0;
                 } else {
                     ArrayList<QueueData> maxDeltaFromRestingQueues = queues;
