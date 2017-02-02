@@ -50,7 +50,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
         queue1.setDelta(T);
         queue2.setDelta(T);
         queue3.setDelta(T);
-
+        //maybe move following lines to sortByAlgorithm method to make it more clear
         queue1.addToQueue(objectsList.get(0));
         queue1.setDelta(queue1.getDelta() - objectsList.get(0).getTime());
         queue2.addToQueue(objectsList.get(1));
