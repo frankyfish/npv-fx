@@ -63,46 +63,43 @@ public class AlgorithmI<T> implements Algorithm<T> {
 
     private void sortByAlgorithm() {
         int k = 0;
+        boolean isAddedToQueue;
         for (int i = 3; i < objectsList.size(); i++) {
-            for (int j = k; j < queues.size(); j++) {
-                QueueData queue = queues.get(j);
-                if (queue.getDelta() >= objectsList.get(i).getTime()) {
-                    queue.addToQueue(objectsList.get(i));//adding MP to queue
-                    queue.setDelta(queue.getDelta() - objectsList.get(i).getTime());//calculating time for que after adding
-                    break;
-                } else if (j == queues.size() - 1 && checkTimeLeftInQueues(objectsList.get(i))) {
-                    k = 0;
-                } else {
-                    ArrayList<QueueData> maxDeltaFromRestingQueues = queues;
-                    QueueData queueWithMaxRestingDelta
-                            = Collections.max(maxDeltaFromRestingQueues, new DeltaComparator());
-                    Integer maxRestingDelta = queueWithMaxRestingDelta.getDelta();
-                    System.out.println("Max resting delta = " + maxRestingDelta);
+            isAddedToQueue = false;
+            while (!isAddedToQueue) {
+                for (int j = k; j < queues.size(); j++) {
+                    QueueData queue = queues.get(j);
+                    if (queue.getDelta() >= objectsList.get(i).getTime()) {
+                        queue.addToQueue(objectsList.get(i));//adding MP to queue
+                        queue.setDelta(queue.getDelta() - objectsList.get(i).getTime());//calculating time for que after adding
+                        k = j;
+                        isAddedToQueue = true;
+                        break;
+                    } else if (j == queues.size() - 1 && checkTimeLeftInQueues(objectsList.get(i))) {
+                        k = 0;
+                        System.out.println("Switched queue loop to beginning for " + i + " miniproject");
+                    } else if (j == queues.size() - 1 && !checkTimeLeftInQueues(objectsList.get(i))) {
+                        //todo check, probably this part doesn't work
+                        System.out.println("Trying to add time to the queue, for " + i + " miniproject");
+                        ArrayList<QueueData> maxDeltaFromRestingQueues = queues;
+                        QueueData queueWithMaxRestingDelta
+                                = Collections.max(maxDeltaFromRestingQueues, new DeltaComparator());
+                        Integer maxRestingDelta = queueWithMaxRestingDelta.getDelta();
+                        System.out.println("Max resting delta = " + maxRestingDelta);
 
-                    for (QueueData curQueue : queues) {
-                        curQueue.setDelta(curQueue.getDelta()
-                                + objectsList.get(i).getTime() - maxRestingDelta);
-                        //T = T +ti - △k* и возвращаемся к шагу 5.
+                        for (QueueData curQueue : queues) {
+                            curQueue.setDelta(curQueue.getDelta()
+                                    + objectsList.get(i).getTime() - maxRestingDelta);
+                            //T = T +ti - △k* и возвращаемся к шагу 5.
+                        }
+                        k = 0;
                     }
-                    sortByAlgorithm();//возврат к шагу 5
                 }
-
-                /*else {//проверить эту часть в алгоритме
-                    ArrayList<QueueData> maxDeltaFromRestingQueues = queues;
-                    QueueData queueWithMaxRestingDelta 
-                            = Collections.max(maxDeltaFromRestingQueues, new DeltaComparator());
-                    Integer maxRestingDelta = queueWithMaxRestingDelta.getDelta();
-                    System.out.println("Max resting delta = "+maxRestingDelta);
-                    
-                    for (QueueData curQueue:queues) {
-                        curQueue.setDelta(curQueue.getDelta() 
-                                + objectsList.get(i).getTime() - maxRestingDelta);
-                        //T = T +ti - △k* и возвращаемся к шагу 5.
-                    }*/
-                //}
             }
         }
-
+        for (QueueData queue:queues) {
+            queue.getMiniProjects().sort(new FactorKComparator());
+        }
         for (int i = 0; i < queues.size(); i++) {
             System.out.println("Queue #" + i);
             for (int j = 0; j < queues.get(i).getMiniProjects().size(); j++) {

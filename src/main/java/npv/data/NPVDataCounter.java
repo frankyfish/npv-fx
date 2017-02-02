@@ -16,7 +16,7 @@ public class NPVDataCounter {
 
     private final int rowNumber;
     private final TableView<NPVData> tableNpv;
-    private Double alpha;
+    private final Double alpha;
 
     Double[] funds;
     Double[] r;

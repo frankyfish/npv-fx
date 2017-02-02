@@ -100,7 +100,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     @FXML private TableColumn<MiniProjectData, Double> directExpense;
     @FXML private TableColumn<MiniProjectData, Double> factorK;
     ObservableList miniProjectData = FXCollections.observableArrayList();
-    
+
     @FXML Button testBtn;
 
     @Override
@@ -171,10 +171,10 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             System.out.println("Text =" + text);
             rowNumber = Integer.parseInt(text); //TODO mb change this move count to another class
             for (int i=0;i<rowNumber;i++) { //TODO change this part\ factory?!
-             npvdat = new NPVData(i,2.0,3.0,4.0,5.0);   
-             data.add(npvdat);
-            }            
-        } else if (event.getSource().equals(addRow)) {            
+                npvdat = new NPVData(i,2.0,3.0,4.0,5.0);
+                data.add(npvdat);
+            }
+        } else if (event.getSource().equals(addRow)) {
             Double newFund = Double.parseDouble(tfNewFund.getText());
             tfNewFund.clear();
             npvdat = new NPVData(rowNumber,newFund);
@@ -184,51 +184,51 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             //TODO: fix the problem
             //alpha value only getted when it is like 1.0
             Double alpha = Double.valueOf(tfAlpha.getText());
-            if (validateAlpha()) {
-                NPVDataCounter nDC =
+            //if (validateAlpha()) {
+            NPVDataCounter nDC =
                     new NPVDataCounter(npvTable, rowNumber, alpha);
-                nDC.countNpv();
-                ArrayList<NPVData> npvDat = new ArrayList<>();
-                //clearing the table before filling it
-                ObservableList<NPVData> tableDat = npvTable.getItems();
+            nDC.countNpv();
+            ArrayList<NPVData> npvDat = new ArrayList<>();
+            //clearing the table before filling it
+                /*ObservableList<NPVData> tableDat = npvTable.getItems();
                 tableDat.clear(); //TODO mb change this code
-                npvTable.setItems(tableDat);
-            
-                for (int i=0;i<rowNumber;i++) {
-                    npvDat.add(
-                    new NPVData(i,nDC.getFunds()[i],nDC.getR()[i],
-                            nDC.getA()[i],nDC.getNpv()[i]));
-                }
-                for (NPVData npvData:npvDat) {
-                    data.add(npvData);
-                }
+                npvTable.setItems(tableDat);*/
+            clearTableBeforeShowCountResults(npvTable);
+            for (int i=0;i<rowNumber;i++) {
+                npvDat.add(
+                        new NPVData(i,nDC.getFunds()[i],nDC.getR()[i],
+                                nDC.getA()[i],nDC.getNpv()[i]));
             }
+            for (NPVData npvData:npvDat) {
+                data.add(npvData);
+            }
+            //}
         } else if (event.getSource().equals(importFromExcell)){
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Excell File");
             System.out.println("Opening excell file");
             Stage s = super.getStage();
             File file = fileChooser.showOpenDialog(s);
-            
+
             XlsImporter xlsImporter = new XlsImporter(file, "#Ri");
             Double[] importedData = xlsImporter.importXls();
             for (int i=0; i< importedData.length; i++) {
-             npvdat = new NPVData(rowNumber,importedData[i]);
-             rowNumber++;
-             data.add(npvdat);   
-            }            
-        }      
+                npvdat = new NPVData(rowNumber,importedData[i]);
+                rowNumber++;
+                data.add(npvdat);
+            }
+        }
     }
-    
+
     @FXML
-    private void handleQueueActions (ActionEvent actionEvent) {        
+    private void handleQueueActions (ActionEvent actionEvent) {
         MiniProjectData miniPrjDat = null;
         if (actionEvent.getSource().equals(btnAdd)) {
             if (tfT != null && tfD != null && tfC != null) {
                 Integer t = Integer.valueOf(tfT.getText());
                 Integer d = Integer.valueOf(tfD.getText());
                 Integer c = Integer.valueOf(tfC.getText());
-                miniPrjDat 
+                miniPrjDat
                         = new MiniProjectData(rowNum, t, d, c);
                 rowNum++;
                 miniProjectData.add(miniPrjDat);
@@ -246,30 +246,31 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                     = new MiniProjectDataCounter(miniProjectTable, alpha, rowNum);
             mpDataCounter.count();
             //clearing table before filling
-            ObservableList<MiniProjectData> currentTableData
+            /*ObservableList<MiniProjectData> currentTableData
                     = miniProjectTable.getItems();
             currentTableData.clear();
-            miniProjectTable.setItems(currentTableData);
-            
+            miniProjectTable.setItems(currentTableData);*/
+            clearTableBeforeShowCountResults(miniProjectTable);
+
             ArrayList<MiniProjectData> newMiniProjectData = new ArrayList<>();
             for (int i=0; i<rowNum; i++) {
                 newMiniProjectData.add(
                         new MiniProjectData(i,
-                                            mpDataCounter.getTime()[i],
-                                            mpDataCounter.getD()[i],
-                                            mpDataCounter.getC()[i],
-                                            mpDataCounter.getS()[i],
-                                            mpDataCounter.getFactorK()[i])
+                                mpDataCounter.getTime()[i],
+                                mpDataCounter.getD()[i],
+                                mpDataCounter.getC()[i],
+                                mpDataCounter.getS()[i],
+                                mpDataCounter.getFactorK()[i])
                 );
             }
-            
+
             for (MiniProjectData newMiniProjectDat:newMiniProjectData) {
                 miniProjectData.add(newMiniProjectDat);
             }
             Algorithm<AlgorithmI> newAlgorithm = new AlgorithmI();
             //newAlgorithm.sort(newMiniProjectData);
             newAlgorithm.sort(newMiniProjectData);
-        } else if (actionEvent.getSource().equals(testBtn)) { //todo delete this is for dev purposes
+        } else if (actionEvent.getSource().equals(testBtn)) {
             miniProjectData.add(new MiniProjectData(0, 10, 2, 25));
             miniProjectData.add(new MiniProjectData(1, 9, 5, 15));
             miniProjectData.add(new MiniProjectData(2, 8, 6, 15));
@@ -299,7 +300,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
         stage.setScene(scene);
         stage.show();
     }
-    
+
     private void setTableColumnsDraggableFalse(TableView tableView) {
         tableView.widthProperty().addListener(
                 new ChangeListener<Number>(){
@@ -309,17 +310,23 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                         header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
                             @Override
                             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                            header.setReordering(false);
+                                header.setReordering(false);
                             }
                         });
                     }
                 });
     }
-    
+
     private boolean validateAlpha() {
-        if (!this.tfAlpha.getText().contains(".")) {           
+        if (!this.tfAlpha.getText().contains(".")) {
             return false;
         }
         return true;
+    }
+
+    private void clearTableBeforeShowCountResults (TableView table) {
+        ObservableList tableDataForErase = table.getItems();
+        tableDataForErase.clear();
+        table.setItems(tableDataForErase);
     }
 }

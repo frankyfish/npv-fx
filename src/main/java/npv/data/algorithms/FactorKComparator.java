@@ -16,7 +16,7 @@ public class FactorKComparator implements Comparator<MiniProjectData>{
 
     @Override
     public int compare(MiniProjectData o1, MiniProjectData o2) {
-        return o1.getFactorK().compareTo(o2.getFactorK());
+        return o1.getFactorK().compareTo(o2.getFactorK()) * -1;//to sort by reduce
     }
-    
+
 }
