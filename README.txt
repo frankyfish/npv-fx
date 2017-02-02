@@ -1,0 +1,1 @@
+Just a lightweight utility for NPV calculation and sorting projects in queues.

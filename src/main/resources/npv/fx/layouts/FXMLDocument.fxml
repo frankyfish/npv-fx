@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.FXMLDocumentController">
+    <children>
+        <Button fx:id="queues" layoutX="59.0" layoutY="88.0" onAction="#handleButtonAction" text="Queues" />
+      <Button fx:id="npv" layoutX="185.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="65.0" text="NPV" />
+      <Text fill="#ff0101" layoutX="18.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="alpha v1.1" underline="true" />
+    </children>
+</AnchorPane>
