@@ -47,6 +47,7 @@ import npv.data.NPVData;
 import npv.data.NPVDataCounter;
 import npv.data.algorithms.Algorithm;
 import npv.data.algorithms.AlgorithmI;
+import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
 /**
@@ -236,6 +237,10 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 tfC.clear();
             }
         } else if (actionEvent.getSource().equals(btnCountFactorK)) {
+            if (tfPercentQueue.getText().isEmpty()) {
+                new UINotification(UINotification.Type.ERROR, "", "aльфа");
+                return;
+            }
             Double alpha = Double.valueOf(tfPercentQueue.getText());
             MiniProjectDataCounter mpDataCounter
                     = new MiniProjectDataCounter(miniProjectTable, alpha, rowNum);

@@ -38,5 +38,6 @@ public class UINotification {
                 break;
         }
         alert.setContentText("Причина: недопустимое значение поля " + cause);
+        alert.showAndWait();
     }
 }
