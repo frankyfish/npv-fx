@@ -282,6 +282,8 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             miniProjectData.add(new MiniProjectData(9, 3, 3, 13));
             miniProjectData.add(new MiniProjectData(10, 2, 2, 20));
             miniProjectData.add(new MiniProjectData(11, 2, 2, 10));
+            rowNum = miniProjectData.size();
+            tfPercentQueue.setText("2");
             miniProjectTable.setItems(miniProjectData);
         }
     }
