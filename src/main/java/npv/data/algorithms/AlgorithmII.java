@@ -26,7 +26,7 @@ public class AlgorithmII<T> implements Algorithm<T> {
         queues.add(queue2);
         queues.add(queue3);
 
-        objectsList.sort(new TimeComparator());//sorting by time (bigger the first)
+        miniProjectsList.sort(new TimeComparator());//sorting by time (bigger the first)
         System.out.println("Results of sorting by time:");
         for (int i = 0; i < objectsList.size(); i++) {
             System.out.print(objectsList.get(i).getTime() + " ");
@@ -78,6 +78,10 @@ public class AlgorithmII<T> implements Algorithm<T> {
         for (QueueData queue:queues) {
             queue.getMiniProjects().sort(new FactorKComparator());
         }
+        printQueueToConsole();
+    }
+
+    private void printQueueToConsole () {
         for (int i = 0; i < queues.size(); i++) {
             System.out.println("Queue #" + i);
             for (int j = 0; j < queues.get(i).getMiniProjects().size(); j++) {

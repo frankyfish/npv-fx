@@ -48,6 +48,7 @@ import npv.data.NPVDataCounter;
 import npv.data.algorithms.Algorithm;
 import npv.data.algorithms.AlgorithmI;
 import npv.data.algorithms.AlgorithmII;
+import npv.data.algorithms.AlgorithmIII;
 import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
@@ -270,8 +271,10 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             }
             //Algorithm<AlgorithmI> newAlgorithm = new AlgorithmI();
             //newAlgorithm.sort(newMiniProjectData);
-            Algorithm<AlgorithmII> newAlgorithmII = new AlgorithmII();
-            newAlgorithmII.sort(newMiniProjectData);
+            //Algorithm<AlgorithmII> newAlgorithmII = new AlgorithmII();
+            //newAlgorithmII.sort(newMiniProjectData);
+            Algorithm<AlgorithmIII> newAlgorithmIII = new AlgorithmIII();
+            newAlgorithmIII.sort(newMiniProjectData);
         } else if (actionEvent.getSource().equals(testBtn)) {
             miniProjectData.add(new MiniProjectData(0, 10, 2, 25));
             miniProjectData.add(new MiniProjectData(1, 9, 5, 15));

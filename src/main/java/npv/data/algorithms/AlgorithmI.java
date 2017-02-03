@@ -100,13 +100,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
         for (QueueData queue:queues) {
             queue.getMiniProjects().sort(new FactorKComparator());
         }
-        for (int i = 0; i < queues.size(); i++) {
-            System.out.println("Queue #" + i);
-            for (int j = 0; j < queues.get(i).getMiniProjects().size(); j++) {
-                System.out.print("MiniProject: " + queues.get(i).getMiniProjects().get(j).getPeriodI()
-                        + " | " + queues.get(i).getMiniProjects().get(j).getTime() + " \n");
-            }
-        }
+        printQueueToConsole();
     }
 
     private boolean checkTimeLeftInQueues(MiniProjectData mPD) {
@@ -125,4 +119,13 @@ public class AlgorithmI<T> implements Algorithm<T> {
         return enoughTimeInQueues;
     }
 
+    private void printQueueToConsole () {
+        for (int i = 0; i < queues.size(); i++) {
+            System.out.println("Queue #" + i);
+            for (int j = 0; j < queues.get(i).getMiniProjects().size(); j++) {
+                System.out.print("MiniProject: " + queues.get(i).getMiniProjects().get(j).getPeriodI()
+                        + " | " + queues.get(i).getMiniProjects().get(j).getTime() + " \n");
+            }
+        }
+    }
 }
