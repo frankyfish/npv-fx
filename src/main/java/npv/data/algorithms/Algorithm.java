@@ -7,6 +7,7 @@ package npv.data.algorithms;
 
 import java.util.ArrayList;
 import npv.data.MiniProjectData;
+import npv.data.QueueData;
 
 /**
  *
@@ -14,6 +15,6 @@ import npv.data.MiniProjectData;
  */
 public interface Algorithm<T> {
     
-    public void sort(ArrayList<MiniProjectData> list);
+    public ArrayList<QueueData> sort(ArrayList<MiniProjectData> list);
     
 }

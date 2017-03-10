@@ -24,17 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
@@ -49,6 +39,7 @@ import npv.data.algorithms.Algorithm;
 import npv.data.algorithms.AlgorithmI;
 import npv.data.algorithms.AlgorithmII;
 import npv.data.algorithms.AlgorithmIII;
+import npv.data.utils.QueueDataUtils;
 import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
@@ -92,6 +83,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     @FXML private Button btnAdd;
     @FXML private Button btnCountFactorK;
     @FXML private TextField tfPercentQueue;
+    @FXML private TextArea taQueues;
     //table for queues
     int rowNum = 0;
     @FXML private TableView<MiniProjectData> miniProjectTable;
@@ -274,7 +266,8 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             //Algorithm<AlgorithmII> newAlgorithmII = new AlgorithmII();
             //newAlgorithmII.sort(newMiniProjectData);
             Algorithm<AlgorithmIII> newAlgorithmIII = new AlgorithmIII();
-            newAlgorithmIII.sort(newMiniProjectData);
+            taQueues.setText(QueueDataUtils
+                    .getStringOfQueueData(newAlgorithmIII.sort(newMiniProjectData)));
         } else if (actionEvent.getSource().equals(testBtn)) {
             miniProjectData.add(new MiniProjectData(0, 10, 2, 25));
             miniProjectData.add(new MiniProjectData(1, 9, 5, 15));

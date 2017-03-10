@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import npv.data.MiniProjectData;
 import npv.data.QueueData;
-import org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment;
 
 /**
  *
@@ -27,7 +26,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
     QueueData queue3 = new QueueData();// in 3 queues
 
     @Override
-    public void sort(ArrayList<MiniProjectData> objList) {
+    public ArrayList<QueueData> sort(ArrayList<MiniProjectData> objList) {
         this.objectsList = objList;
         queues.add(queue1);
         queues.add(queue2);
@@ -59,6 +58,7 @@ public class AlgorithmI<T> implements Algorithm<T> {
         queue3.setDelta(queue3.getDelta() - objectsList.get(2).getTime());
 
         sortByAlgorithm();
+        return queues;
     }
 
     private void sortByAlgorithm() {

@@ -20,7 +20,7 @@ public class AlgorithmII<T> implements Algorithm<T> {
     QueueData queue3 = new QueueData();// in 3 queues
 
     @Override
-    public void sort(ArrayList<MiniProjectData> objectsList) {
+    public ArrayList<QueueData> sort(ArrayList<MiniProjectData> objectsList) {
         this.miniProjectsList = objectsList;
         queues.add(queue1);
         queues.add(queue2);
@@ -45,6 +45,7 @@ public class AlgorithmII<T> implements Algorithm<T> {
         queue3.setDelta(T);
 
         sortByAlgorithm(objectsList.size());
+        return queues;
     }
 
     private void sortByAlgorithm(int numberOfMiniProjects) {
