@@ -6,19 +6,18 @@
 package npv.fx;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,11 +25,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javax.swing.JOptionPane;
 import npv.data.MiniProjectData;
 import npv.data.MiniProjectDataCounter;
 import npv.data.NPVData;
@@ -43,8 +39,11 @@ import npv.data.utils.QueueDataUtils;
 import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
+import static npv.fx.GUIConstants.ALGORITHM_I;
+import static npv.fx.GUIConstants.ALGORITHM_II;
+import static npv.fx.GUIConstants.ALGORITHM_III;
+
 /**
- *
  * @author nima0814
  */
 public class FXMLDocumentController extends GUIManager implements Initializable {
@@ -54,53 +53,87 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     private Stage rootStage;
     private Scene rootScene;
 
-    @FXML private Button queues;
-    @FXML private Button npv;
+    @FXML
+    private Button queues;
+    @FXML
+    private Button npv;
     //control panel
-    @FXML private Button returnToRoot;
-    @FXML private Button importFromExcell;
+    @FXML
+    private Button returnToRoot;
+    @FXML
+    private Button importFromExcell;
     //npv buttons for count\control
-    @FXML private Spinner spinnerPeriods;
-    @FXML private Label testLabel;
-    @FXML private TextField textPeriods;
-    @FXML private Button btnCount;
-    @FXML private TextField tfNewFund;
-    @FXML private TextField tfAlpha;
+    @FXML
+    private Spinner spinnerPeriods;
+    @FXML
+    private Label testLabel;
+    @FXML
+    private TextField textPeriods;
+    @FXML
+    private Button btnCount;
+    @FXML
+    private TextField tfNewFund;
+    @FXML
+    private TextField tfAlpha;
     //table NPV
     int rowNumber = 0;
-    @FXML private TableView<NPVData> npvTable;
-    @FXML private TableColumn<NPVData, Integer> periodId;
-    @FXML private TableColumn<NPVData, Double> fundPerPeriod;
-    @FXML private TableColumn<NPVData, Double> fundWithAlpha;
-    @FXML private TableColumn<NPVData, Double> discountRateAlpha;
-    @FXML private TableColumn<NPVData, Double> netPresentValue;
-    @FXML private Button addRow;
+    @FXML
+    private TableView<NPVData> npvTable;
+    @FXML
+    private TableColumn<NPVData, Integer> periodId;
+    @FXML
+    private TableColumn<NPVData, Double> fundPerPeriod;
+    @FXML
+    private TableColumn<NPVData, Double> fundWithAlpha;
+    @FXML
+    private TableColumn<NPVData, Double> discountRateAlpha;
+    @FXML
+    private TableColumn<NPVData, Double> netPresentValue;
+    @FXML
+    private Button addRow;
     ObservableList data = FXCollections.observableArrayList();
     //queues buttons etc
-    @FXML private TextField tfT;
-    @FXML private TextField tfD;
-    @FXML private TextField tfC;
-    @FXML private Button btnAdd;
-    @FXML private Button btnCountFactorK;
-    @FXML private TextField tfPercentQueue;
-    @FXML private TextArea taQueues;
+    @FXML
+    private TextField tfT;
+    @FXML
+    private TextField tfD;
+    @FXML
+    private TextField tfC;
+    @FXML
+    private Button btnAdd;
+    @FXML
+    private Button btnCountFactorK;
+    @FXML
+    private TextField tfPercentQueue;
+    @FXML
+    private TextArea taQueues;
+    @FXML
+    private ChoiceBox cbAlgorithmSelection;
     //table for queues
     int rowNum = 0;
-    @FXML private TableView<MiniProjectData> miniProjectTable;
-    @FXML private TableColumn<MiniProjectData, Integer> periodI;
-    @FXML private TableColumn<MiniProjectData, Integer> time;
-    @FXML private TableColumn<MiniProjectData, Integer> income;
-    @FXML private TableColumn<MiniProjectData, Integer> gain;
-    @FXML private TableColumn<MiniProjectData, Double> directExpense;
-    @FXML private TableColumn<MiniProjectData, Double> factorK;
+    @FXML
+    private TableView<MiniProjectData> miniProjectTable;
+    @FXML
+    private TableColumn<MiniProjectData, Integer> periodI;
+    @FXML
+    private TableColumn<MiniProjectData, Integer> time;
+    @FXML
+    private TableColumn<MiniProjectData, Integer> income;
+    @FXML
+    private TableColumn<MiniProjectData, Integer> gain;
+    @FXML
+    private TableColumn<MiniProjectData, Double> directExpense;
+    @FXML
+    private TableColumn<MiniProjectData, Double> factorK;
     ObservableList miniProjectData = FXCollections.observableArrayList();
 
-    @FXML Button testBtn;
+    @FXML
+    Button testBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String path = url.getPath();
-        if (path.contains(GUIConstants.FXML_NPV_LAYOUT+".fxml")) { //TODO change this part (change architecture)
+        if (path.contains(GUIConstants.FXML_NPV_LAYOUT + ".fxml")) { //TODO change this part (change architecture)
             periodId.setCellValueFactory(new PropertyValueFactory<>("periodId"));
             fundPerPeriod.setCellValueFactory(new PropertyValueFactory<>("fundPerPeriod"));
             fundWithAlpha.setCellValueFactory(new PropertyValueFactory<>("fundWithAlpha"));
@@ -109,7 +142,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             setTableColumnsDraggableFalse(npvTable);//for moving cells
             npvTable.setItems(data);
         }
-        if (path.contains(GUIConstants.FXML_QUEUES_LAYOUT+".fxml")) {
+        if (path.contains(GUIConstants.FXML_QUEUES_LAYOUT + ".fxml")) {
             periodI.setCellValueFactory(new PropertyValueFactory<>("periodI"));
             time.setCellValueFactory(new PropertyValueFactory<>("time"));
             income.setCellValueFactory(new PropertyValueFactory<>("income"));
@@ -118,6 +151,9 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             factorK.setCellValueFactory(new PropertyValueFactory<>("factorK"));
             setTableColumnsDraggableFalse(miniProjectTable);
             miniProjectTable.setItems(miniProjectData);
+
+            cbAlgorithmSelection.
+                    setItems(FXCollections.observableArrayList(ALGORITHM_I, ALGORITHM_II, ALGORITHM_III));
         }
     }
 
@@ -164,14 +200,14 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             String text = textPeriods.getText();
             System.out.println("Text =" + text);
             rowNumber = Integer.parseInt(text); //TODO mb change this move count to another class
-            for (int i=0;i<rowNumber;i++) { //TODO change this part\ factory?!
-                npvdat = new NPVData(i,2.0,3.0,4.0,5.0);
+            for (int i = 0; i < rowNumber; i++) { //TODO change this part\ factory?!
+                npvdat = new NPVData(i, 2.0, 3.0, 4.0, 5.0);
                 data.add(npvdat);
             }
         } else if (event.getSource().equals(addRow)) {
             Double newFund = Double.parseDouble(tfNewFund.getText());
             tfNewFund.clear();
-            npvdat = new NPVData(rowNumber,newFund);
+            npvdat = new NPVData(rowNumber, newFund);
             rowNumber++;
             data.add(npvdat);
         } else if (event.getSource().equals(btnCount)) {
@@ -188,16 +224,16 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 tableDat.clear(); //TODO mb change this code
                 npvTable.setItems(tableDat);*/
             clearTableBeforeShowCountResults(npvTable);
-            for (int i=0;i<rowNumber;i++) {
+            for (int i = 0; i < rowNumber; i++) {
                 npvDat.add(
-                        new NPVData(i,nDC.getFunds()[i],nDC.getR()[i],
-                                nDC.getA()[i],nDC.getNpv()[i]));
+                        new NPVData(i, nDC.getFunds()[i], nDC.getR()[i],
+                                nDC.getA()[i], nDC.getNpv()[i]));
             }
-            for (NPVData npvData:npvDat) {
+            for (NPVData npvData : npvDat) {
                 data.add(npvData);
             }
             //}
-        } else if (event.getSource().equals(importFromExcell)){
+        } else if (event.getSource().equals(importFromExcell)) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Excell File");
             System.out.println("Opening excell file");
@@ -206,8 +242,8 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
 
             XlsImporter xlsImporter = new XlsImporter(file, "#Ri");
             Double[] importedData = xlsImporter.importXls();
-            for (int i=0; i< importedData.length; i++) {
-                npvdat = new NPVData(rowNumber,importedData[i]);
+            for (int i = 0; i < importedData.length; i++) {
+                npvdat = new NPVData(rowNumber, importedData[i]);
                 rowNumber++;
                 data.add(npvdat);
             }
@@ -215,7 +251,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     }
 
     @FXML
-    private void handleQueueActions (ActionEvent actionEvent) {
+    private void handleQueueActions(ActionEvent actionEvent) {
         MiniProjectData miniPrjDat = null;
         if (actionEvent.getSource().equals(btnAdd)) {
             if (tfT != null && tfD != null && tfC != null) {
@@ -247,7 +283,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             clearTableBeforeShowCountResults(miniProjectTable);
 
             ArrayList<MiniProjectData> newMiniProjectData = new ArrayList<>();
-            for (int i=0; i<rowNum; i++) {
+            for (int i = 0; i < rowNum; i++) {
                 newMiniProjectData.add(
                         new MiniProjectData(i,
                                 mpDataCounter.getTime()[i],
@@ -258,16 +294,32 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 );
             }
 
-            for (MiniProjectData newMiniProjectDat:newMiniProjectData) {
+            for (MiniProjectData newMiniProjectDat : newMiniProjectData) {
                 miniProjectData.add(newMiniProjectDat);
             }
-            //Algorithm<AlgorithmI> newAlgorithm = new AlgorithmI();
-            //newAlgorithm.sort(newMiniProjectData);
-            //Algorithm<AlgorithmII> newAlgorithmII = new AlgorithmII();
-            //newAlgorithmII.sort(newMiniProjectData);
-            Algorithm<AlgorithmIII> newAlgorithmIII = new AlgorithmIII();
-            taQueues.setText(QueueDataUtils
-                    .getStringOfQueueData(newAlgorithmIII.sort(newMiniProjectData)));
+            Algorithm selectedAlgorithm;
+            String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
+            if (choiceBoxValue != null) {
+                switch (cbAlgorithmSelection.getValue().toString()) {
+                    case ALGORITHM_I:
+                        selectedAlgorithm = new AlgorithmI();
+                        taQueues.setText(QueueDataUtils
+                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                        break;
+                    case ALGORITHM_II:
+                        selectedAlgorithm = new AlgorithmII();
+                        taQueues.setText(QueueDataUtils
+                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                        break;
+                    case ALGORITHM_III:
+                        selectedAlgorithm = new AlgorithmIII();
+                        taQueues.setText(QueueDataUtils
+                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                        break;
+                }
+            } else {
+                new UINotification(UINotification.Type.ERROR, "", "algorithm type");
+            }
         } else if (actionEvent.getSource().equals(testBtn)) {
             miniProjectData.add(new MiniProjectData(0, 10, 2, 25));
             miniProjectData.add(new MiniProjectData(1, 9, 5, 15));
@@ -301,9 +353,9 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
 
     private void setTableColumnsDraggableFalse(TableView tableView) {
         tableView.widthProperty().addListener(
-                new ChangeListener<Number>(){
+                new ChangeListener<Number>() {
                     @Override
-                    public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth){
+                    public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth) {
                         TableHeaderRow header = (TableHeaderRow) tableView.lookup("TableHeaderRow");
                         header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
                             @Override
@@ -322,7 +374,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
         return true;
     }
 
-    private void clearTableBeforeShowCountResults (TableView table) {
+    private void clearTableBeforeShowCountResults(TableView table) {
         ObservableList tableDataForErase = table.getItems();
         tableDataForErase.clear();
         table.setItems(tableDataForErase);

@@ -16,7 +16,7 @@ public class QueueData {
     
     private ArrayList<MiniProjectData> miniProjects
             = new ArrayList<>();
-    private Integer delta; //time
+    private Integer delta; //time used for sorting only
 
     public ArrayList<MiniProjectData> getMiniProjects() {
         return miniProjects;

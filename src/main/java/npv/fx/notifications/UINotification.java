@@ -37,7 +37,7 @@ public class UINotification {
                 alert.setHeaderText(h);
                 break;
         }
-        alert.setContentText("Причина: недопустимое значение поля " + cause);
+        alert.setContentText("Причина:\n недопустимое значение поля " + cause);
         alert.showAndWait();
     }
 }

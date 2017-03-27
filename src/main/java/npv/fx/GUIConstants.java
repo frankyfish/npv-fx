@@ -20,6 +20,12 @@ public class GUIConstants implements Initializable {
     public static final String FXML_NPV_LAYOUT = String.valueOf("NPV");
     public static final String FXML_QUEUES_LAYOUT = String.valueOf("Queues");
 
+    //Queues.fxml
+    //choicebox values
+    public static final String ALGORITHM_I = "Algorithm I";
+    public static final String ALGORITHM_II = "Algorithm II";
+    public static final String ALGORITHM_III = "Algorithm III";
+
     //NPV GUI properties
     public static int numberOfRows;
 
