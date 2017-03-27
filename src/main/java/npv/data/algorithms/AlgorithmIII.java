@@ -34,6 +34,11 @@ public class AlgorithmIII<T> implements Algorithm<T>{
         return queues;
     }
 
+    @Override
+    public ArrayList<QueueData> getQueues() {
+        return queues;
+    }
+
     private void sortByAlgorithm (int miniProjectsNumber) {
         for (int i = 0; i < miniProjectsNumber; i++) {
             QueueData queueWithMinDelta = findMinInQueue();

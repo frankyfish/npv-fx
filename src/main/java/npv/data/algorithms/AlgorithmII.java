@@ -48,6 +48,11 @@ public class AlgorithmII<T> implements Algorithm<T> {
         return queues;
     }
 
+    @Override
+    public ArrayList<QueueData> getQueues() {
+        return queues;
+    }
+
     private void sortByAlgorithm(int numberOfMiniProjects) {
         int k = 0;
         boolean addedToQueue;
@@ -85,6 +90,7 @@ public class AlgorithmII<T> implements Algorithm<T> {
     private void printQueueToConsole () {
         for (int i = 0; i < queues.size(); i++) {
             System.out.println("Queue #" + i);
+            System.out.print("Da = " + queues.get(i).getDelta() + "\n");
             for (int j = 0; j < queues.get(i).getMiniProjects().size(); j++) {
                 System.out.print("MiniProject: " + queues.get(i).getMiniProjects().get(j).getPeriodI()
                         + " | " + queues.get(i).getMiniProjects().get(j).getTime() + " \n");

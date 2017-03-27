@@ -27,10 +27,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import npv.data.MiniProjectData;
-import npv.data.MiniProjectDataCounter;
-import npv.data.NPVData;
-import npv.data.NPVDataCounter;
+import npv.data.*;
 import npv.data.algorithms.Algorithm;
 import npv.data.algorithms.AlgorithmI;
 import npv.data.algorithms.AlgorithmII;
@@ -267,58 +264,62 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 tfC.clear();
             }
         } else if (actionEvent.getSource().equals(btnCountFactorK)) {
-            if (tfPercentQueue.getText().isEmpty()) {
-                new UINotification(UINotification.Type.ERROR, "", "aльфа");
-                return;
-            }
-            Double alpha = Double.valueOf(tfPercentQueue.getText());
-            MiniProjectDataCounter mpDataCounter
-                    = new MiniProjectDataCounter(miniProjectTable, alpha, rowNum);
-            mpDataCounter.count();
-            //clearing table before filling
-            /*ObservableList<MiniProjectData> currentTableData
-                    = miniProjectTable.getItems();
-            currentTableData.clear();
-            miniProjectTable.setItems(currentTableData);*/
-            clearTableBeforeShowCountResults(miniProjectTable);
-
-            ArrayList<MiniProjectData> newMiniProjectData = new ArrayList<>();
-            for (int i = 0; i < rowNum; i++) {
-                newMiniProjectData.add(
-                        new MiniProjectData(i,
-                                mpDataCounter.getTime()[i],
-                                mpDataCounter.getD()[i],
-                                mpDataCounter.getC()[i],
-                                mpDataCounter.getS()[i],
-                                mpDataCounter.getFactorK()[i])
-                );
-            }
-
-            for (MiniProjectData newMiniProjectDat : newMiniProjectData) {
-                miniProjectData.add(newMiniProjectDat);
-            }
-            Algorithm selectedAlgorithm;
-            String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
-            if (choiceBoxValue != null) {
-                switch (cbAlgorithmSelection.getValue().toString()) {
-                    case ALGORITHM_I:
-                        selectedAlgorithm = new AlgorithmI();
-                        taQueues.setText(QueueDataUtils
-                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
-                        break;
-                    case ALGORITHM_II:
-                        selectedAlgorithm = new AlgorithmII();
-                        taQueues.setText(QueueDataUtils
-                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
-                        break;
-                    case ALGORITHM_III:
-                        selectedAlgorithm = new AlgorithmIII();
-                        taQueues.setText(QueueDataUtils
-                                .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
-                        break;
+            try {
+                if (tfPercentQueue.getText().isEmpty()) {
+                    new UINotification(UINotification.Type.ERROR, "", "aльфа");
+                    return;
                 }
-            } else {
-                new UINotification(UINotification.Type.ERROR, "", "algorithm type");
+                Double alpha = Double.valueOf(tfPercentQueue.getText());
+                MiniProjectDataCounter mpDataCounter
+                        = new MiniProjectDataCounter(miniProjectTable, alpha, rowNum);
+                mpDataCounter.count();
+                //clearing table before filling
+                clearTableBeforeShowCountResults(miniProjectTable);
+
+                ArrayList<MiniProjectData> newMiniProjectData = new ArrayList<>();
+                for (int i = 0; i < rowNum; i++) {
+                    newMiniProjectData.add(
+                            new MiniProjectData(i,
+                                    mpDataCounter.getTime()[i],
+                                    mpDataCounter.getD()[i],
+                                    mpDataCounter.getC()[i],
+                                    mpDataCounter.getS()[i],
+                                    mpDataCounter.getFactorK()[i])
+                    );
+                }
+
+                for (MiniProjectData newMiniProjectDat : newMiniProjectData) {
+                    miniProjectData.add(newMiniProjectDat);
+                }
+                Algorithm selectedAlgorithm;
+                String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
+                if (choiceBoxValue != null) {
+                    switch (cbAlgorithmSelection.getValue().toString()) {
+                        case ALGORITHM_I:
+                            selectedAlgorithm = new AlgorithmI();
+                            taQueues.setText(QueueDataUtils
+                                    .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                            PlanDataCounter planDataCounter
+                                    = new PlanDataCounter(selectedAlgorithm.getQueues());
+                            planDataCounter.count();
+                            break;
+                        case ALGORITHM_II:
+                            selectedAlgorithm = new AlgorithmII();
+                            taQueues.setText(QueueDataUtils
+                                    .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                            break;
+                        case ALGORITHM_III:
+                            selectedAlgorithm = new AlgorithmIII();
+                            taQueues.setText(QueueDataUtils
+                                    .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                            break;
+                    }
+                } else {
+                    new UINotification(UINotification.Type.ERROR, "", "algorithm type");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                new UINotification(UINotification.Type.ERROR, "Fatal Error", e.getMessage());
             }
         } else if (actionEvent.getSource().equals(testBtn)) {
             miniProjectData.add(new MiniProjectData(0, 10, 2, 25));

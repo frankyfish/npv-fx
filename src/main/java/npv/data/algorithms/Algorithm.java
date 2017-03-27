@@ -16,5 +16,7 @@ import npv.data.QueueData;
 public interface Algorithm<T> {
     
     public ArrayList<QueueData> sort(ArrayList<MiniProjectData> list);
+
+    public ArrayList<QueueData> getQueues();
     
 }
