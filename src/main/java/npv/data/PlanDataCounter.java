@@ -19,16 +19,29 @@ public class PlanDataCounter {
         int periodsTillEnd = calculateTimeScaleForQueues();
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
             ArrayList<PlanData> plansPerQueue = new ArrayList<>();
+            int sumOfTime = 0;
             for (MiniProjectData miniProject : queues.get(queueNumber).getMiniProjects()) {
                 PlanData planData = new PlanData(miniProject.getPeriodI());
                 int time = miniProject.getTime();
-                for (int i = 0; i <= time; i++) {
-                    planData.addToMiniProjectProfit(0);
+                sumOfTime += time;
+                if (plansPerQueue.size() == 0) {
+                    //for 1st MP
+                    for (int i = 0; i < time; i++) {
+                        planData.addToMiniProjectProfit(0);
+                    }
+                    for (int j = time + 1; j <= periodsTillEnd; j++) {
+                        planData.addToMiniProjectProfit(miniProject.getIncome());
+                    }
+                    plansPerQueue.add(planData);
+                } else {
+                    for (int i = 0; i < sumOfTime; i++) {
+                        planData.addToMiniProjectProfit(0);
+                    }
+                    for (int j = sumOfTime + 1; j<= periodsTillEnd; j++) {
+                        planData.addToMiniProjectProfit(miniProject.getIncome());
+                    }
+                    plansPerQueue.add(planData);
                 }
-                for (int j = time + 1; j <= periodsTillEnd; j++) {
-                    planData.addToMiniProjectProfit(miniProject.getIncome());
-                }
-                plansPerQueue.add(planData);
             }
             plans.put(queueNumber, plansPerQueue);
         }
