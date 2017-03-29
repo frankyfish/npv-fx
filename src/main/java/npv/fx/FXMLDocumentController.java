@@ -294,24 +294,28 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 Algorithm selectedAlgorithm;
                 String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
                 if (choiceBoxValue != null) {
+                    PlanDataCounter planDataCounter;
                     switch (cbAlgorithmSelection.getValue().toString()) {
                         case ALGORITHM_I:
                             selectedAlgorithm = new AlgorithmI();
                             taQueues.setText(QueueDataUtils
                                     .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
-                            PlanDataCounter planDataCounter
-                                    = new PlanDataCounter(selectedAlgorithm.getQueues());
+                            planDataCounter = new PlanDataCounter(selectedAlgorithm.getQueues());
                             planDataCounter.count();
                             break;
                         case ALGORITHM_II:
                             selectedAlgorithm = new AlgorithmII();
                             taQueues.setText(QueueDataUtils
                                     .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                            planDataCounter = new PlanDataCounter(selectedAlgorithm.getQueues());
+                            planDataCounter.count();
                             break;
                         case ALGORITHM_III:
                             selectedAlgorithm = new AlgorithmIII();
                             taQueues.setText(QueueDataUtils
                                     .getStringOfQueueData(selectedAlgorithm.sort(newMiniProjectData)));
+                            planDataCounter = new PlanDataCounter(selectedAlgorithm.getQueues());
+                            planDataCounter.count();
                             break;
                     }
                 } else {

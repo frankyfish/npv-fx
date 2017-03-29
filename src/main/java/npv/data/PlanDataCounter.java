@@ -10,13 +10,14 @@ import java.util.LinkedHashMap;
 public class PlanDataCounter {
     private ArrayList<QueueData> queues;
     LinkedHashMap<Integer, ArrayList<PlanData>> plans = new LinkedHashMap<>();
+    int periodsTillEnd;
 
     public PlanDataCounter(ArrayList<QueueData> queueData) {
         this.queues = queueData;
+        this.periodsTillEnd = calculateTimeScaleForQueues();
     }
 
-    public void count() throws Exception{
-        int periodsTillEnd = calculateTimeScaleForQueues();
+    public void count() throws Exception {
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
             ArrayList<PlanData> plansPerQueue = new ArrayList<>();
             int sumOfTime = 0;
@@ -37,7 +38,7 @@ public class PlanDataCounter {
                     for (int i = 0; i < sumOfTime; i++) {
                         planData.addToMiniProjectProfit(0);
                     }
-                    for (int j = sumOfTime + 1; j<= periodsTillEnd; j++) {
+                    for (int j = sumOfTime + 1; j <= periodsTillEnd; j++) {
                         planData.addToMiniProjectProfit(miniProject.getIncome());
                     }
                     plansPerQueue.add(planData);
@@ -45,6 +46,7 @@ public class PlanDataCounter {
             }
             plans.put(queueNumber, plansPerQueue);
         }
+        calculateRFlow();
         printQueueToConsole();
     }
 
@@ -67,14 +69,37 @@ public class PlanDataCounter {
         return result;
     }
 
-    public void printQueueToConsole(){
+    //officially: following method is ugliest ever
+    private void calculateRFlow() throws Exception{
+        for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
+            PlanData rFlow = new PlanData(-42); //  Life, The Universe, and Everything
+            ArrayList<PlanData> currentQueuePlan = plans.get(queueNumber);
+            for (int i = 0; i < periodsTillEnd; i++) {
+                Integer sumPerPeriod = 0;
+                for (PlanData planData : currentQueuePlan) {
+                    sumPerPeriod += planData.getProfitByMiniProject().get(i);
+                }
+                rFlow.addToMiniProjectProfit(sumPerPeriod);
+                if (i == periodsTillEnd - 1) {
+                    currentQueuePlan.add(rFlow);
+                }
+            }
+        }
+    }
+
+    public void printQueueToConsole() {
         StringBuilder resultString = new StringBuilder();
         for (int i = 0; i < queues.size(); i++) {
             ArrayList<PlanData> planPerQueue = plans.get(i);
-            int index = i;
-            resultString.append("Queue #" + index++ + "\n");
+            int index = i + 1;
+            resultString.append("Queue #" + index + "\n");
             for (PlanData planData : planPerQueue) {
-                resultString.append(planData.getMiniProjectNumber() + "\t");
+                Integer miniProjectName = planData.getMiniProjectNumber();
+                if (miniProjectName != -42) {
+                    resultString.append(miniProjectName + "\t");
+                } else {
+                    resultString.append("" + "\t");
+                }
                 for (Integer period : planData.getProfitByMiniProject()) {
                     resultString.append(period + " ");
                 }
