@@ -13,9 +13,9 @@ public class QueueDataUtils {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < queues.size(); i++) {
             int queueNumber = i + 1;
-            result.append("Queue #" + queueNumber + "\n");
-            queues.get(i).getMiniProjects().forEach(miniProjectData -> result.append(miniProjectData.getPeriodI()+"\n"));
-            result.append("=============\n");
+            result.append("Queue #" + queueNumber + ": ");
+            queues.get(i).getMiniProjects().forEach(miniProjectData -> result.append(miniProjectData.getPeriodI() + " "));
+            result.append("\n");
         }
         return result.toString();
     }
