@@ -104,6 +104,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     private TextField tfPercentQueue;
     @FXML
     private TextArea taQueues;
+    @FXML private TextArea taQueuesProfit;
     @FXML
     private ChoiceBox cbAlgorithmSelection;
     //table for queues
@@ -294,7 +295,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 Algorithm selectedAlgorithm;
                 String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
                 if (choiceBoxValue != null) {
-                    PlanDataCounter planDataCounter;
+                    PlanDataCounter planDataCounter = null; //TODO: 07.04.17  change this row
                     switch (cbAlgorithmSelection.getValue().toString()) {
                         case ALGORITHM_I:
                             selectedAlgorithm = new AlgorithmI();
@@ -317,6 +318,9 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                             planDataCounter = new PlanDataCounter(selectedAlgorithm.getQueues());
                             planDataCounter.count();
                             break;
+                    }
+                    if (planDataCounter != null) {
+                        taQueuesProfit.setText(planDataCounter.getStringRepresentation());
                     }
                 } else {
                     new UINotification(UINotification.Type.ERROR, "", "algorithm type");

@@ -46,5 +46,6 @@
       <Separator layoutX="63.0" layoutY="504.0" prefHeight="0.0" prefWidth="862.0" />
       <Text layoutX="146.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alpha" />
       <Text layoutX="140.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by" />
+      <TextArea fx:id="taQueuesProfit" editable="false" layoutX="515.0" layoutY="141.0" prefHeight="302.0" prefWidth="411.0" promptText="Result of profit calculation will be here" />
     </children>
 </AnchorPane>

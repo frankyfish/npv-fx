@@ -47,7 +47,6 @@ public class PlanDataCounter {
             plans.put(queueNumber, plansPerQueue);
         }
         calculateRFlow();
-        printQueueToConsole();
     }
 
     private int calculateTimeScaleForQueues() {
@@ -87,7 +86,7 @@ public class PlanDataCounter {
         }
     }
 
-    public void printQueueToConsole() {
+    public String getStringRepresentation() {
         StringBuilder resultString = new StringBuilder();
         for (int i = 0; i < queues.size(); i++) {
             ArrayList<PlanData> planPerQueue = plans.get(i);
@@ -107,6 +106,6 @@ public class PlanDataCounter {
             }
             resultString.append("\n\n");
         }
-        System.out.println(resultString.toString());
+        return resultString.toString();
     }
 }
