@@ -50,79 +50,50 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
     private Stage rootStage;
     private Scene rootScene;
 
-    @FXML
-    private Button queues;
-    @FXML
-    private Button npv;
+    @FXML private Button queues;
+    @FXML private Button npv;
     //control panel
-    @FXML
-    private Button returnToRoot;
-    @FXML
-    private Button importFromExcell;
+    @FXML private Button returnToRoot;
+    @FXML private Button importFromExcell;
     //npv buttons for count\control
-    @FXML
-    private Spinner spinnerPeriods;
-    @FXML
-    private Label testLabel;
-    @FXML
-    private TextField textPeriods;
-    @FXML
-    private Button btnCount;
-    @FXML
-    private TextField tfNewFund;
-    @FXML
-    private TextField tfAlpha;
+    @FXML private Spinner spinnerPeriods;
+    @FXML private Label testLabel;
+    @FXML private TextField textPeriods;
+    @FXML private Button btnCount;
+    @FXML private TextField tfNewFund;
+    @FXML private TextField tfAlpha;
     //table NPV
     int rowNumber = 0;
-    @FXML
-    private TableView<NPVData> npvTable;
-    @FXML
-    private TableColumn<NPVData, Integer> periodId;
-    @FXML
-    private TableColumn<NPVData, Double> fundPerPeriod;
-    @FXML
-    private TableColumn<NPVData, Double> fundWithAlpha;
-    @FXML
-    private TableColumn<NPVData, Double> discountRateAlpha;
-    @FXML
-    private TableColumn<NPVData, Double> netPresentValue;
-    @FXML
-    private Button addRow;
+    @FXML private TableView<NPVData> npvTable;
+    @FXML private TableColumn<NPVData, Integer> periodId;
+    @FXML private TableColumn<NPVData, Double> fundPerPeriod;
+    @FXML private TableColumn<NPVData, Double> fundWithAlpha;
+    @FXML private TableColumn<NPVData, Double> discountRateAlpha;
+    @FXML private TableColumn<NPVData, Double> netPresentValue;
+    @FXML private Button addRow;
     ObservableList data = FXCollections.observableArrayList();
     //queues buttons etc
-    @FXML
-    private TextField tfT;
-    @FXML
-    private TextField tfD;
-    @FXML
-    private TextField tfC;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private Button btnCountFactorK;
-    @FXML
-    private TextField tfPercentQueue;
-    @FXML
-    private TextArea taQueues;
+    @FXML private TextField tfT;
+    @FXML private TextField tfD;
+    @FXML private TextField tfC;
+    @FXML private Button btnAdd;
+    @FXML private Button btnCountFactorK;
+    @FXML private TextField tfPercentQueue;
+    @FXML private TextArea taQueues;
     @FXML private TextArea taQueuesProfit;
-    @FXML
-    private ChoiceBox cbAlgorithmSelection;
+    @FXML private ChoiceBox cbAlgorithmSelection;
+    @FXML private Button btShowInNewWindow;
+    //for limiting new windows creation
+    static boolean isNewWindowCreated = false;
     //table for queues
     int rowNum = 0;
-    @FXML
-    private TableView<MiniProjectData> miniProjectTable;
-    @FXML
-    private TableColumn<MiniProjectData, Integer> periodI;
-    @FXML
-    private TableColumn<MiniProjectData, Integer> time;
-    @FXML
-    private TableColumn<MiniProjectData, Integer> income;
-    @FXML
-    private TableColumn<MiniProjectData, Integer> gain;
-    @FXML
-    private TableColumn<MiniProjectData, Double> directExpense;
-    @FXML
-    private TableColumn<MiniProjectData, Double> factorK;
+    @FXML private TableView<MiniProjectData> miniProjectTable;
+    @FXML private TableColumn<MiniProjectData, Integer> periodI;
+    @FXML private TableColumn<MiniProjectData, Integer> time;
+    @FXML private TableColumn<MiniProjectData, Integer> income;
+    @FXML private TableColumn<MiniProjectData, Integer> gain;
+    @FXML private TableColumn<MiniProjectData, Double> directExpense;
+    @FXML private TableColumn<MiniProjectData, Double> factorK;
     ObservableList miniProjectData = FXCollections.observableArrayList();
 
     @FXML
@@ -345,6 +316,19 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             rowNum = miniProjectData.size();
             tfPercentQueue.setText("2");
             miniProjectTable.setItems(miniProjectData);
+        } else if (actionEvent.getSource().equals(btShowInNewWindow)) {
+            if (!isNewWindowCreated) {
+                try {
+                    isNewWindowCreated = true;
+                    Parent layout = FXMLLoader.load(getClass().getResource("layouts/ProfitFlow.fxml"));
+                    Stage queuesStage = new Stage();
+                    Scene queuesScene = new Scene(layout);
+                    queuesStage.setScene(queuesScene);
+                    queuesStage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 
@@ -387,5 +371,14 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
         ObservableList tableDataForErase = table.getItems();
         tableDataForErase.clear();
         table.setItems(tableDataForErase);
+    }
+
+
+    public static boolean isNewWindowCreated() {
+        return isNewWindowCreated;
+    }
+
+    public static void setNewWindowCreated(boolean newWindowCreated) {
+        isNewWindowCreated = newWindowCreated;
     }
 }

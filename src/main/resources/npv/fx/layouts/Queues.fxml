@@ -47,5 +47,6 @@
       <Text layoutX="146.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alpha" />
       <Text layoutX="140.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by" />
       <TextArea fx:id="taQueuesProfit" editable="false" layoutX="515.0" layoutY="141.0" prefHeight="302.0" prefWidth="411.0" promptText="Result of profit calculation will be here" />
+      <Button fx:id="btShowInNewWindow" layoutX="655.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Separate Window" />
     </children>
 </AnchorPane>
