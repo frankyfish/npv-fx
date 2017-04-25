@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import npv.fx.FXMLDocumentController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,8 +26,8 @@ public class ProfitFlowController implements Initializable {
     private void handleControlActions(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(btClose)) {
             Stage stage = (Stage) btClose.getScene().getWindow();
-            if (FXMLDocumentController.isNewWindowCreated()) {
-                FXMLDocumentController.setNewWindowCreated(false);
+            if (QueuesController.isNewWindowCreated()) {
+                QueuesController.setNewWindowCreated(false);
             }
             stage.close();
         }

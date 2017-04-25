@@ -29,7 +29,7 @@ public class GUIManager extends Application {
     }
 
     private void buildRootScene() throws IOException {
-        root = FXMLLoader.load(getClass().getResource("layouts/FXMLDocument.fxml"));
+        root = FXMLLoader.load(getClass().getResource("layouts/MainMenu.fxml"));
         //root = FXMLLoader.load(getClass().getResource("layouts/NPV.fxml"));
         scene = new Scene(root);
 

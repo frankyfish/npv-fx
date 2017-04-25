@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package npv.fx;
+package npv.fx.controllers;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
@@ -13,6 +13,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import npv.fx.GUIConstants;
+import npv.fx.controllers.NavigationController;
+import npv.fx.controllers.utils.ControllerUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -43,35 +46,13 @@ import static npv.fx.GUIConstants.ALGORITHM_III;
 /**
  * @author nima0814
  */
-public class FXMLDocumentController extends GUIManager implements Initializable {
+public class QueuesController extends NavigationController implements Initializable {
 
     //mb delete this fields
     private Parent rootFxml;
     private Stage rootStage;
     private Scene rootScene;
 
-    @FXML private Button queues;
-    @FXML private Button npv;
-    //control panel
-    @FXML private Button returnToRoot;
-    @FXML private Button importFromExcell;
-    //npv buttons for count\control
-    @FXML private Spinner spinnerPeriods;
-    @FXML private Label testLabel;
-    @FXML private TextField textPeriods;
-    @FXML private Button btnCount;
-    @FXML private TextField tfNewFund;
-    @FXML private TextField tfAlpha;
-    //table NPV
-    int rowNumber = 0;
-    @FXML private TableView<NPVData> npvTable;
-    @FXML private TableColumn<NPVData, Integer> periodId;
-    @FXML private TableColumn<NPVData, Double> fundPerPeriod;
-    @FXML private TableColumn<NPVData, Double> fundWithAlpha;
-    @FXML private TableColumn<NPVData, Double> discountRateAlpha;
-    @FXML private TableColumn<NPVData, Double> netPresentValue;
-    @FXML private Button addRow;
-    ObservableList data = FXCollections.observableArrayList();
     //queues buttons etc
     @FXML private TextField tfT;
     @FXML private TextField tfD;
@@ -101,123 +82,19 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String path = url.getPath();
-        if (path.contains(GUIConstants.FXML_NPV_LAYOUT + ".fxml")) { //TODO change this part (change architecture)
-            periodId.setCellValueFactory(new PropertyValueFactory<>("periodId"));
-            fundPerPeriod.setCellValueFactory(new PropertyValueFactory<>("fundPerPeriod"));
-            fundWithAlpha.setCellValueFactory(new PropertyValueFactory<>("fundWithAlpha"));
-            discountRateAlpha.setCellValueFactory(new PropertyValueFactory<>("discountRateAlpha"));
-            netPresentValue.setCellValueFactory(new PropertyValueFactory<>("netPresentValue"));
-            setTableColumnsDraggableFalse(npvTable);//for moving cells
-            npvTable.setItems(data);
-        }
-        if (path.contains(GUIConstants.FXML_QUEUES_LAYOUT + ".fxml")) {
             periodI.setCellValueFactory(new PropertyValueFactory<>("periodI"));
             time.setCellValueFactory(new PropertyValueFactory<>("time"));
             income.setCellValueFactory(new PropertyValueFactory<>("income"));
             gain.setCellValueFactory(new PropertyValueFactory<>("gain"));
             directExpense.setCellValueFactory(new PropertyValueFactory<>("directExpense"));
             factorK.setCellValueFactory(new PropertyValueFactory<>("factorK"));
-            setTableColumnsDraggableFalse(miniProjectTable);
+            ControllerUtils.setTableColumnsDraggableFalse(miniProjectTable);
             miniProjectTable.setItems(miniProjectData);
 
             cbAlgorithmSelection.
                     setItems(FXCollections.observableArrayList(ALGORITHM_I, ALGORITHM_II, ALGORITHM_III));
-        }
     }
 
-    @FXML
-    private void handleButtonAction(ActionEvent event) throws Exception, IOException {
-        rootFxml = GUIManager.getRoot();
-        rootStage = (Stage) npv.getScene().getWindow();
-        rootScene = npv.getScene();
-
-        Stage currentStage = null;
-        Parent layout = null;
-        //todo change button1 block to another, useful one
-        if (event.getSource().equals(queues)) {
-            layout = loadLayout(GUIConstants.FXML_QUEUES_LAYOUT);
-            currentStage = (Stage) queues.getScene().getWindow();
-            goToNewScene(layout, currentStage);
-        } else if (event.getSource().equals(npv)) {
-            layout = loadLayout(GUIConstants.FXML_NPV_LAYOUT);
-            currentStage = (Stage) npv.getScene().getWindow();
-            goToNewScene(layout, currentStage);
-        }
-    }
-
-    @FXML
-    public void handleControlButtonAction(ActionEvent event)
-            throws Exception, IOException {
-        if (event.getSource().equals(returnToRoot)) {
-            //TODO figure out how to save root,scene,stage from the 
-            //default window (to save the date from it) mb use map instead for
-            // saving the data itself
-            /*if (rootFxml != null && rootStage != null 
-                    && rootScene != null) {           
-                rootStage.show();*/
-            Parent fxml = loadLayout(GUIConstants.FXML_ROOT_LAYOUT);
-            Stage stage = (Stage) returnToRoot.getScene().getWindow();
-            goToNewScene(fxml, stage);
-        }
-    }
-
-    @FXML
-    public void handleNpvActions(ActionEvent event) throws Exception, IOException {
-        NPVData npvdat = null;
-        if (event.getSource().equals(textPeriods)) {
-            String text = textPeriods.getText();
-            System.out.println("Text =" + text);
-            rowNumber = Integer.parseInt(text); //TODO mb change this move count to another class
-            for (int i = 0; i < rowNumber; i++) { //TODO change this part\ factory?!
-                npvdat = new NPVData(i, 2.0, 3.0, 4.0, 5.0);
-                data.add(npvdat);
-            }
-        } else if (event.getSource().equals(addRow)) {
-            Double newFund = Double.parseDouble(tfNewFund.getText());
-            tfNewFund.clear();
-            npvdat = new NPVData(rowNumber, newFund);
-            rowNumber++;
-            data.add(npvdat);
-        } else if (event.getSource().equals(btnCount)) {
-            //TODO: fix the problem
-            //alpha value only getted when it is like 1.0
-            Double alpha = Double.valueOf(tfAlpha.getText());
-            //if (validateAlpha()) {
-            NPVDataCounter nDC =
-                    new NPVDataCounter(npvTable, rowNumber, alpha);
-            nDC.countNpv();
-            ArrayList<NPVData> npvDat = new ArrayList<>();
-            //clearing the table before filling it
-                /*ObservableList<NPVData> tableDat = npvTable.getItems();
-                tableDat.clear(); //TODO mb change this code
-                npvTable.setItems(tableDat);*/
-            clearTableBeforeShowCountResults(npvTable);
-            for (int i = 0; i < rowNumber; i++) {
-                npvDat.add(
-                        new NPVData(i, nDC.getFunds()[i], nDC.getR()[i],
-                                nDC.getA()[i], nDC.getNpv()[i]));
-            }
-            for (NPVData npvData : npvDat) {
-                data.add(npvData);
-            }
-            //}
-        } else if (event.getSource().equals(importFromExcell)) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Excell File");
-            System.out.println("Opening excell file");
-            Stage s = super.getStage();
-            File file = fileChooser.showOpenDialog(s);
-
-            XlsImporter xlsImporter = new XlsImporter(file, "#Ri");
-            Double[] importedData = xlsImporter.importXls();
-            for (int i = 0; i < importedData.length; i++) {
-                npvdat = new NPVData(rowNumber, importedData[i]);
-                rowNumber++;
-                data.add(npvdat);
-            }
-        }
-    }
 
     @FXML
     private void handleQueueActions(ActionEvent actionEvent) {
@@ -246,7 +123,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                         = new MiniProjectDataCounter(miniProjectTable, alpha, rowNum);
                 mpDataCounter.count();
                 //clearing table before filling
-                clearTableBeforeShowCountResults(miniProjectTable);
+                ControllerUtils.clearTableBeforeShowCountResults(miniProjectTable);
 
                 ArrayList<MiniProjectData> newMiniProjectData = new ArrayList<>();
                 for (int i = 0; i < rowNum; i++) {
@@ -320,7 +197,7 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
             if (!isNewWindowCreated) {
                 try {
                     isNewWindowCreated = true;
-                    Parent layout = FXMLLoader.load(getClass().getResource("layouts/ProfitFlow.fxml"));
+                    Parent layout = FXMLLoader.load(getClass().getResource(GUIConstants.FXML_PROFIT_FLOW_LAYOUT));
                     Stage queuesStage = new Stage();
                     Scene queuesScene = new Scene(layout);
                     queuesStage.setScene(queuesScene);
@@ -330,47 +207,6 @@ public class FXMLDocumentController extends GUIManager implements Initializable 
                 }
             }
         }
-    }
-
-    private Parent loadLayout(String layoutName) throws IOException {
-        layoutName = "layouts/" + layoutName + ".fxml";
-        Parent layout = FXMLLoader.load(getClass().getResource(layoutName));
-        return layout;
-    }
-
-    private void goToNewScene(Parent fxml, Stage stage) {
-        Scene scene = new Scene(fxml);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void setTableColumnsDraggableFalse(TableView tableView) {
-        tableView.widthProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> source, Number oldWidth, Number newWidth) {
-                        TableHeaderRow header = (TableHeaderRow) tableView.lookup("TableHeaderRow");
-                        header.reorderingProperty().addListener(new ChangeListener<Boolean>() {
-                            @Override
-                            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                                header.setReordering(false);
-                            }
-                        });
-                    }
-                });
-    }
-
-    private boolean validateAlpha() {
-        if (!this.tfAlpha.getText().contains(".")) {
-            return false;
-        }
-        return true;
-    }
-
-    private void clearTableBeforeShowCountResults(TableView table) {
-        ObservableList tableDataForErase = table.getItems();
-        tableDataForErase.clear();
-        table.setItems(tableDataForErase);
     }
 
 
