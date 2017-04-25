@@ -78,5 +78,9 @@ public class NPVDataCounter {
         return npv;
     }
 
+    public Double getNPVValue() {
+        return npv[npv.length - 1];
+    }
+
     private final int FUNDS_PER_PERIOD_COL_NUM = 1;
 }

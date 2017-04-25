@@ -26,9 +26,7 @@ import java.util.ResourceBundle;
 public class NPVController extends NavigationController implements Initializable {
     @FXML private Button importFromExcell;
     //npv buttons for count\control
-    @FXML private Spinner spinnerPeriods;
-    @FXML private Label testLabel;
-    @FXML private TextField textPeriods;
+    @FXML private TextField tfResultNPV;
     @FXML private Button btnCount;
     @FXML private TextField tfNewFund;
     @FXML private TextField tfAlpha;
@@ -47,33 +45,27 @@ public class NPVController extends NavigationController implements Initializable
     @FXML
     public void handleNpvActions(ActionEvent event) throws Exception, IOException {
         NPVData npvdat = null;
-        if (event.getSource().equals(textPeriods)) {
-            String text = textPeriods.getText();
-            System.out.println("Text =" + text);
-            rowNumber = Integer.parseInt(text); //TODO mb change this move count to another class
-            for (int i = 0; i < rowNumber; i++) { //TODO change this part\ factory?!
-                npvdat = new NPVData(i, 2.0, 3.0, 4.0, 5.0);
-                data.add(npvdat);
-            }
-        } else if (event.getSource().equals(addRow)) {
+//        if (event.getSource().equals(textPeriods)) {
+//            String text = textPeriods.getText();
+//            System.out.println("Text =" + text);
+//            rowNumber = Integer.parseInt(text); //TODO mb change this move count to another class
+//            for (int i = 0; i < rowNumber; i++) { //TODO change this part\ factory?!
+//                npvdat = new NPVData(i, 2.0, 3.0, 4.0, 5.0);
+//                data.add(npvdat);
+//            }
+//        } else
+        if (event.getSource().equals(addRow)) {
             Double newFund = Double.parseDouble(tfNewFund.getText());
             tfNewFund.clear();
             npvdat = new NPVData(rowNumber, newFund);
             rowNumber++;
             data.add(npvdat);
         } else if (event.getSource().equals(btnCount)) {
-            //TODO: fix the problem
-            //alpha value only getted when it is like 1.0
             Double alpha = Double.valueOf(tfAlpha.getText());
-            //if (validateAlpha()) {
             NPVDataCounter nDC =
                     new NPVDataCounter(npvTable, rowNumber, alpha);
             nDC.countNpv();
             ArrayList<NPVData> npvDat = new ArrayList<>();
-            //clearing the table before filling it
-                /*ObservableList<NPVData> tableDat = npvTable.getItems();
-                tableDat.clear(); //TODO mb change this code
-                npvTable.setItems(tableDat);*/
             ControllerUtils.clearTableBeforeShowCountResults(npvTable);
             for (int i = 0; i < rowNumber; i++) {
                 npvDat.add(
@@ -83,7 +75,9 @@ public class NPVController extends NavigationController implements Initializable
             for (NPVData npvData : npvDat) {
                 data.add(npvData);
             }
-            //}
+            StringBuilder resultNpv = new StringBuilder();
+            resultNpv.append(Math.round(nDC.getNPVValue()));
+            tfResultNPV.setText(resultNpv.toString());
         } else if (event.getSource().equals(importFromExcell)) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Excell File");

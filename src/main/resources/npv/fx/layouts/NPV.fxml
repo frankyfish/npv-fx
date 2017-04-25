@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -9,7 +8,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.NPVController">
     <children>
@@ -32,11 +30,7 @@
             <TableColumn fx:id="netPresentValue" prefWidth="185.0" sortable="false" text="NPV" />
         </columns>
       </TableView>
-        <Label fx:id="testLabel" layoutX="39.0" layoutY="151.0" prefHeight="17.0" prefWidth="59.0" text="" visible="false" />
-      <TextField fx:id="textPeriods" layoutX="503.0" layoutY="485.0" onAction="#handleNpvActions" prefHeight="26.0" prefWidth="131.0" promptText="Enter Number of Periods">
-         <font>
-            <Font size="10.0" />
-         </font></TextField>
+      <TextField fx:id="tfResultNPV" editable="false" layoutX="503.0" layoutY="485.0" onAction="#handleNpvActions" prefHeight="26.0" prefWidth="131.0" promptText="NPV value will be here" />
       <Button fx:id="addRow" layoutX="214.0" layoutY="483.0" mnemonicParsing="false" onAction="#handleNpvActions" text="Add Row" />
       <Button fx:id="btnCount" layoutX="644.0" layoutY="484.0" mnemonicParsing="false" onAction="#handleNpvActions" text="Count" />
       <TextField fx:id="tfNewFund" layoutX="36.0" layoutY="483.0" onAction="#handleNpvActions" promptText="0.0" />
