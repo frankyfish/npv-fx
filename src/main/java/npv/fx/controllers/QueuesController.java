@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
+import javafx.scene.layout.AnchorPane;
 import npv.fx.GUIConstants;
 import npv.fx.controllers.NavigationController;
 import npv.fx.controllers.utils.ControllerUtils;
@@ -76,9 +78,9 @@ public class QueuesController extends NavigationController implements Initializa
     @FXML private TableColumn<MiniProjectData, Double> directExpense;
     @FXML private TableColumn<MiniProjectData, Double> factorK;
     ObservableList miniProjectData = FXCollections.observableArrayList();
+    @FXML Button testBtn;
 
-    @FXML
-    Button testBtn;
+    private LinkedHashMap<Integer, ArrayList<PlanData>> plans;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,6 +170,7 @@ public class QueuesController extends NavigationController implements Initializa
                             break;
                     }
                     if (planDataCounter != null) {
+                        plans = planDataCounter.getPlans();
                         taQueuesProfit.setText(planDataCounter.getStringRepresentation());
                     }
                 } else {
@@ -197,9 +200,13 @@ public class QueuesController extends NavigationController implements Initializa
             if (!isNewWindowCreated) {
                 try {
                     isNewWindowCreated = true;
-                    Parent layout = FXMLLoader.load(getClass().getResource(GUIConstants.FXML_PROFIT_FLOW_LAYOUT));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_PROFIT_FLOW_LAYOUT));
+                    ProfitFlowController controller = new ProfitFlowController(plans);
+                    loader.setController(controller);
+                    AnchorPane pane = loader.load();
+
                     Stage queuesStage = new Stage();
-                    Scene queuesScene = new Scene(layout);
+                    Scene queuesScene = new Scene(pane);
                     queuesStage.setScene(queuesScene);
                     queuesStage.show();
                 } catch (IOException ex) {

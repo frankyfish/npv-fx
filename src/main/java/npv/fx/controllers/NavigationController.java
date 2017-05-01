@@ -7,10 +7,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import npv.data.PlanData;
 import npv.fx.GUIManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 
 /**
@@ -18,6 +21,7 @@ import java.util.ResourceBundle;
  */
 public class NavigationController extends GUIManager implements Initializable {
 
+    private LinkedHashMap<Integer, ArrayList<PlanData>> calendarPlans = new LinkedHashMap<>();
     //control panel
     @FXML private Button returnToRoot;
 
@@ -38,6 +42,14 @@ public class NavigationController extends GUIManager implements Initializable {
             rootStage.setScene(getScene());
             rootStage.show();
         }
+    }
+
+    protected void setCalendarPlans(LinkedHashMap<Integer, ArrayList<PlanData>> calendarPlans) {
+        this.calendarPlans.putAll(calendarPlans);
+    }
+
+    protected LinkedHashMap<Integer, ArrayList<PlanData>> getCalendarPlans() {
+        return calendarPlans;
     }
 
     @Override

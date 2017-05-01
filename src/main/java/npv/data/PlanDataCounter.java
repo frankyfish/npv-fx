@@ -1,13 +1,14 @@
 package npv.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 /**
  * Created by nick on 13.03.17.
  */
 public class PlanDataCounter {
+    public static final Integer FAKE_MINIPROJECT_NUMBER_FOR_R_SUM = -71;
+    public static final Integer FAKE_MINIPROJECT_NUMBER_FOR_R = -42;
+
     private ArrayList<QueueData> queues;
     LinkedHashMap<Integer, ArrayList<PlanData>> plans = new LinkedHashMap<>();
     int periodsTillEnd;
@@ -69,9 +70,10 @@ public class PlanDataCounter {
     }
 
     //officially: following method is ugliest ever
-    private void calculateRFlow() throws Exception{
+    private void calculateRFlow() throws Exception {
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
-            PlanData rFlow = new PlanData(-42); //  Life, The Universe, and Everything
+            //fake MiniProject with sum
+            PlanData rFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R); //  Life, The Universe, and Everything
             ArrayList<PlanData> currentQueuePlan = plans.get(queueNumber);
             for (int i = 0; i < periodsTillEnd; i++) {
                 Integer sumPerPeriod = 0;
@@ -94,7 +96,7 @@ public class PlanDataCounter {
             resultString.append("Queue #" + index + "\n");
             for (PlanData planData : planPerQueue) {
                 Integer miniProjectName = planData.getMiniProjectNumber();
-                if (miniProjectName != -42) {
+                if (miniProjectName != FAKE_MINIPROJECT_NUMBER_FOR_R) {
                     resultString.append(miniProjectName + "\t");
                 } else {
                     resultString.append("" + "\t");
@@ -107,5 +109,30 @@ public class PlanDataCounter {
             resultString.append("\n\n");
         }
         return resultString.toString();
+    }
+
+    public LinkedHashMap<Integer, ArrayList<PlanData>> getPlans() {
+        return plans;
+    }
+
+    public static PlanData getSumOfRFlow(LinkedHashMap<Integer, ArrayList<PlanData>> plans) {
+        List<Integer> result
+                = new ArrayList<>(plans.get(0).get(0).getProfitByMiniProject().size());
+        for (Map.Entry<Integer, ArrayList<PlanData>> plan : plans.entrySet()) {
+            for (PlanData miniProject : plan.getValue()) {
+                if (miniProject.getMiniProjectNumber() == FAKE_MINIPROJECT_NUMBER_FOR_R) {
+                    ArrayList<Integer> profit = miniProject.getProfitByMiniProject();
+                    if (result.isEmpty()) {
+                        result.addAll(profit);
+                    } else {
+                        for (int i = 0; i < profit.size(); i++) {
+                            result.add(i, result.remove(i) + profit.get(i));
+                        }
+                    }
+                }
+            }
+        }
+        PlanData sumOfRFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R_SUM, new ArrayList<>(result));
+        return sumOfRFlow;
     }
 }

@@ -44,4 +44,10 @@ public class PlanData {
     public void setProfitByMiniProject(ArrayList<Integer> profitByMiniProject) {
         this.profitByMiniProject = profitByMiniProject;
     }
+
+    public ArrayList<Integer> getMiniProjectNumberAndProfits() {
+        ArrayList<Integer> result = new ArrayList<>(profitByMiniProject);
+        result.add(0, miniProjectNumber);
+        return result;
+    }
 }
