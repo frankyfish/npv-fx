@@ -23,7 +23,7 @@ public class PlanDataCounter {
             ArrayList<PlanData> plansPerQueue = new ArrayList<>();
             int sumOfTime = 0;
             for (MiniProjectData miniProject : queues.get(queueNumber).getMiniProjects()) {
-                PlanData planData = new PlanData(miniProject.getPeriodI(), miniProject.getGain());
+                PlanData planData = new PlanData(miniProject.getPeriodI(), miniProject.getGain() * -1);
                 int time = miniProject.getTime();
                 sumOfTime += time;
                 if (plansPerQueue.size() == 0) {

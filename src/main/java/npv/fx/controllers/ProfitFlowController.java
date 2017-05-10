@@ -1,5 +1,6 @@
 package npv.fx.controllers;
 
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,29 +41,42 @@ public class ProfitFlowController extends NavigationController implements Initia
         ObservableList<ObservableList> data = FXCollections.observableArrayList();
         ObservableList<ObservableList> sumOfRData = FXCollections.observableArrayList();
 
-        int numberOfColumns = plans.get(0).get(0).getMiniProjectNumberAndProfits().size();
+        int numberOfColumns = plans.get(0).get(0).getMiniProjectCostAndProfits().size();
+        Integer indexOfNameColumn = numberOfColumns;
 
         //adding caption columns
-        //Caption for queues
-        TableColumn nameColumn = new TableColumn(("c"));
+        //Caption for queues names
+        TableColumn nameColumn = new TableColumn("N"/*(indexOfNameColumn.toString())*/);
         nameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                return new SimpleStringProperty(param.getValue().get(0).toString());
+                return new SimpleStringProperty(param.getValue().get(indexOfNameColumn).toString());
             }
         });
-        tvQueue.getColumns().add(0, nameColumn);
 
-        for (int i = 1; i < numberOfColumns + 1; i++) {
+        //caption for sum of R
+        TableColumn nameColumnR = new TableColumn(("N"));
+        nameColumnR.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+                return new SimpleStringProperty(param.getValue().get(numberOfColumns).toString());
+            }
+        });
+
+        Collection<TableColumn> columns = new ArrayList<TableColumn>();
+        Collection<TableColumn> columnsForR = new ArrayList<TableColumn>();
+        columns.add(nameColumn);
+        columnsForR.add(nameColumnR);
+        for (int i = 0; i < numberOfColumns; i++) {
             final int id = i;
-            TableColumn col = new TableColumn(String.valueOf(i-1));
+            TableColumn col = new TableColumn(String.valueOf(id));
             col.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                 @Override
                 public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-                    return new SimpleStringProperty(param.getValue().get(id-1).toString());
+                    return new SimpleStringProperty(param.getValue().get(id).toString());
                 }
             });
-            tvQueue.getColumns().add(col);
+            columns.add(col);
             TableColumn columnsForSumOfR = new TableColumn(String.valueOf(i));
             columnsForSumOfR.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                 @Override
@@ -70,68 +84,44 @@ public class ProfitFlowController extends NavigationController implements Initia
                     return new SimpleStringProperty(param.getValue().get(id).toString());
                 }
             });
-            tvRSum.getColumns().add(columnsForSumOfR);//same amount of columns for RSum
+            columnsForR.add(columnsForSumOfR);
         }
+
+
+        columns.forEach(column -> tvQueue.getColumns().add(column));
+        columnsForR.forEach(columnR -> tvRSum.getColumns().add(columnR));
+
+        List<Double> costs = PlanDataCounter.getMiniProjectsCostsPerQueue(plans);
 
         for (Map.Entry<Integer, ArrayList<PlanData>> plan : plans.entrySet()) {
             for (PlanData planData : plan.getValue()) {
                 ObservableList<String> row = FXCollections.observableArrayList();
-//                ArrayList<Double> profits = planData.getMiniProjectNumberAndProfits();
-                ArrayList<String> profits = planData.getStringMiniProjectNumberAndProfits();
+                ArrayList<String> profits = planData.getStringMiniProjectCostAndProfits();
                 for (int i = 0; i < profits.size(); i++) {
-                    if (profits.get(i).equals(PlanDataCounter.FAKE_MINIPROJECT_NUMBER_FOR_R.toString())) {
-                        row.add(i, "R");
-                    } else {
-                        row.add(i, profits.get(i).toString());
-                    }
+                    row.add(i, profits.get(i).toString());
+                }
+                if(PlanDataCounter.FAKE_MINIPROJECT_NUMBER_FOR_R.equals(planData.getMiniProjectNumber())) {
+                    row.add(numberOfColumns, "R");
+                } else {
+                    row.add(numberOfColumns, planData.getMiniProjectNumber().toString());
                 }
                 data.add(row);
             }
         }
 
-
-
-
-
-
-        tvQueue.refresh();
-//        //caption for sum of R
-//        TableColumn nameColumnR = new TableColumn(("c"));
-//        nameColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-//            @Override
-//            public ObservableValue call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-//                return new SimpleStringProperty(param.getValue().get(0).toString());
-//            }
-//        });
-//
-//        tvRSum.getColumns().add(0, nameColumnR);
-//        tvRSum.refresh();
-//        //populating first column with rows
-        List<Double> costs = PlanDataCounter.getMiniProjectsCostsPerQueue(plans);
-//
-        for (int i = 0; i < data.size(); i++) {
-            ObservableList<String> row = data.get(i);
-            if (row.contains("R")) {
-                row.add(0, costs.remove(0).toString());
-            }
-//            else {
-//                row.add(0, " ");
-//            }
-        }
         tvQueue.setItems(data);
-        tvQueue.refresh();
+
         //table with sum of R
         ObservableList<String> rowOfRValues = FXCollections.observableArrayList();
         PlanData sumOfRPlanData = PlanDataCounter.getSumOfRFlow(plans);
-        rowOfRValues.add(0, PlanDataCounter.getCostOfAllQueues(plans).toString());
-        rowOfRValues.add(1, "R"); //because 0 is for cost
-//        sumOfRPlanData.getProfitByMiniProject().forEach(value -> rowOfRValues.add(value.toString()));
         for (int i = 0; i < sumOfRPlanData.getProfitByMiniProject().size(); i++) {
-            rowOfRValues.add(i+2, sumOfRPlanData.getProfitByMiniProject().get(i).toString());
-            //+2 because 0&1 a reserved for cost & caption 'R'
+            rowOfRValues.add(i, sumOfRPlanData.getProfitByMiniProject().get(i).toString());
         }
+        rowOfRValues.add(0, PlanDataCounter.getCostOfAllQueues(plans).toString());
+        rowOfRValues.add(numberOfColumns, "R");
         sumOfRData.add(rowOfRValues);
         tvRSum.setItems(sumOfRData);
+
     }
 
     @FXML

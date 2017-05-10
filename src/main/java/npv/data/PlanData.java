@@ -52,6 +52,10 @@ public class PlanData {
         return miniProjectCost;
     }
 
+    public void setMiniProjectCost(Double miniProjectCost) {
+        this.miniProjectCost = miniProjectCost;
+    }
+
     public void setProfitByMiniProject(ArrayList<Double> profitByMiniProject) {
         this.profitByMiniProject = profitByMiniProject;
     }
@@ -62,9 +66,29 @@ public class PlanData {
         return result;
     }
 
+    public ArrayList<Double> getMiniProjectCostAndProfits() {
+        ArrayList<Double> result = new ArrayList<>(profitByMiniProject);
+        result.add(0, miniProjectCost);
+        return result;
+    }
+
+    public ArrayList<Double> getMiniProjectNumberCostAndProfits() {
+        ArrayList<Double> result = new ArrayList<>(profitByMiniProject);
+        result.add(0, miniProjectNumber.doubleValue());
+        result.add(1, miniProjectCost);
+        return result;
+    }
+
     public ArrayList<String> getStringMiniProjectNumberAndProfits() {
         ArrayList<String> result = new ArrayList<>(profitByMiniProject.size());
         result.add(0, miniProjectNumber.toString());
+        profitByMiniProject.forEach(profit -> result.add(profit.toString()));
+        return result;
+    }
+
+    public ArrayList<String> getStringMiniProjectCostAndProfits() {
+        ArrayList<String> result = new ArrayList<>(profitByMiniProject.size());
+        result.add(0, miniProjectCost.toString());
         profitByMiniProject.forEach(profit -> result.add(profit.toString()));
         return result;
     }
