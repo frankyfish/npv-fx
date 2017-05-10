@@ -10,19 +10,26 @@ import java.util.ArrayList;
  */
 public class PlanData {
     private Integer miniProjectNumber;
-    private ArrayList<Integer> profitByMiniProject;
+    private Double miniProjectCost;
+    private ArrayList<Double> profitByMiniProject;
 
     public PlanData(Integer miniProjectN) {
         this.miniProjectNumber = miniProjectN;
         this.profitByMiniProject= new ArrayList<>();
     }
 
-    public PlanData(Integer miniProjectN, ArrayList<Integer> profit) {
+    public PlanData(Integer miniProjectN, Double cost) {
+        this.miniProjectNumber = miniProjectN;
+        this.miniProjectCost = cost;
+        this.profitByMiniProject= new ArrayList<>();
+    }
+
+    public PlanData(Integer miniProjectN, ArrayList<Double> profit) {
         this.miniProjectNumber = miniProjectN;
         this.profitByMiniProject = profit;
     }
 
-    public void addToMiniProjectProfit(@NotNull Integer value) throws Exception {
+    public void addToMiniProjectProfit(@NotNull Double value) throws Exception {
         if (null == value) {
             throw new Exception("Null value is not allowed here");
         }
@@ -37,17 +44,28 @@ public class PlanData {
         this.miniProjectNumber = miniProjectNumber;
     }
 
-    public ArrayList<Integer> getProfitByMiniProject() {
+    public ArrayList<Double> getProfitByMiniProject() {
         return profitByMiniProject;
     }
 
-    public void setProfitByMiniProject(ArrayList<Integer> profitByMiniProject) {
+    public Double getMiniProjectCost() {
+        return miniProjectCost;
+    }
+
+    public void setProfitByMiniProject(ArrayList<Double> profitByMiniProject) {
         this.profitByMiniProject = profitByMiniProject;
     }
 
-    public ArrayList<Integer> getMiniProjectNumberAndProfits() {
-        ArrayList<Integer> result = new ArrayList<>(profitByMiniProject);
-        result.add(0, miniProjectNumber);
+    public ArrayList<Double> getMiniProjectNumberAndProfits() {
+        ArrayList<Double> result = new ArrayList<>(profitByMiniProject);
+        result.add(0, miniProjectNumber.doubleValue());
+        return result;
+    }
+
+    public ArrayList<String> getStringMiniProjectNumberAndProfits() {
+        ArrayList<String> result = new ArrayList<>(profitByMiniProject.size());
+        result.add(0, miniProjectNumber.toString());
+        profitByMiniProject.forEach(profit -> result.add(profit.toString()));
         return result;
     }
 }

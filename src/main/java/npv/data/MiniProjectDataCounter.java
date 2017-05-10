@@ -21,7 +21,7 @@ public class MiniProjectDataCounter {
     Integer[] time;
     Double[] S;
     Integer [] D;
-    Integer[] C;
+    Double[] C;
     Double[] factorK;
     
     public MiniProjectDataCounter(TableView<MiniProjectData> mpdTable,
@@ -33,7 +33,7 @@ public class MiniProjectDataCounter {
         time = new Integer[rowNum];
         S = new Double[rowNum];
         D = new Integer[rowNum];
-        C = new Integer[rowNum];
+        C = new Double[rowNum];
         factorK = new Double[rowNum];
     }
     
@@ -42,7 +42,7 @@ public class MiniProjectDataCounter {
                 = tableView.getColumns().get(GAIN_COL_NUMBER);
         
         for (int i=0; i<rowNum; i++) {
-           C[i] = (Integer) gainCol.getCellData(i);
+           C[i] = (Double) gainCol.getCellData(i);
         }
         
         TableColumn<MiniProjectData, ?> timeCol 
@@ -90,7 +90,7 @@ public class MiniProjectDataCounter {
         return D;
     }
     
-    public Integer[] getC() {
+    public Double[] getC() {
         return C;
     }
     

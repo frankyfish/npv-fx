@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.NPVController">
+<AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ToolBar prefHeight="40.0" prefWidth="760.0">
             <items>

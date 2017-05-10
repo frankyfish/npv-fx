@@ -17,26 +17,26 @@ public class MiniProjectData {
     private SimpleIntegerProperty periodI = new SimpleIntegerProperty();//i
     private SimpleIntegerProperty time = new SimpleIntegerProperty();//t
     private SimpleIntegerProperty income = new SimpleIntegerProperty();//D
-    private SimpleIntegerProperty gain = new SimpleIntegerProperty();//C
+    private SimpleDoubleProperty gain = new SimpleDoubleProperty();//C
     private SimpleDoubleProperty directExpense = new SimpleDoubleProperty();//S
     private SimpleDoubleProperty factorK = new SimpleDoubleProperty();//k
 
     public MiniProjectData(){}
 
-    public MiniProjectData(Integer numId, Integer t, Integer D, Integer C) {
+    public MiniProjectData(Integer numId, Integer t, Integer D, Double C) {
         this.periodI = new SimpleIntegerProperty(numId+1); //+1 for UI view
         this.time = new SimpleIntegerProperty(t);
         this.income = new SimpleIntegerProperty(D);
-        this.gain = new SimpleIntegerProperty(C);
+        this.gain = new SimpleDoubleProperty(C);
         this.directExpense = new SimpleDoubleProperty(0);
         this.factorK = new SimpleDoubleProperty(0);
     }
 
-    public MiniProjectData(Integer numId, Integer t, Integer D, Integer C, Double S, Double K) {
+    public MiniProjectData(Integer numId, Integer t, Integer D, Double C, Double S, Double K) {
         this.periodI = new SimpleIntegerProperty(numId+1); //+1 for UI view
         this.time = new SimpleIntegerProperty(t);
         this.income = new SimpleIntegerProperty(D);
-        this.gain = new SimpleIntegerProperty(C);
+        this.gain = new SimpleDoubleProperty(C);
         this.directExpense = new SimpleDoubleProperty(S);
         this.factorK = new SimpleDoubleProperty(K);
     }
@@ -53,7 +53,7 @@ public class MiniProjectData {
         return this.income.get();
     }
 
-    public Integer getGain() {
+    public Double getGain() {
         return this.gain.get();
     }
 

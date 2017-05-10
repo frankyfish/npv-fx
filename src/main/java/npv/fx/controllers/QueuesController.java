@@ -10,9 +10,7 @@ import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
 import npv.fx.GUIConstants;
@@ -66,6 +64,7 @@ public class QueuesController extends NavigationController implements Initializa
     @FXML private TextArea taQueuesProfit;
     @FXML private ChoiceBox cbAlgorithmSelection;
     @FXML private Button btShowInNewWindow;
+    @FXML private Button countNPV;
     //for limiting new windows creation
     static boolean isNewWindowCreated = false;
     //table for queues
@@ -105,7 +104,7 @@ public class QueuesController extends NavigationController implements Initializa
             if (tfT != null && tfD != null && tfC != null) {
                 Integer t = Integer.valueOf(tfT.getText());
                 Integer d = Integer.valueOf(tfD.getText());
-                Integer c = Integer.valueOf(tfC.getText());
+                Double c = Double.valueOf(tfC.getText());
                 miniPrjDat
                         = new MiniProjectData(rowNum, t, d, c);
                 rowNum++;
@@ -181,18 +180,18 @@ public class QueuesController extends NavigationController implements Initializa
                 new UINotification(UINotification.Type.ERROR, "Fatal Error", e.getMessage());
             }
         } else if (actionEvent.getSource().equals(testBtn)) {
-            miniProjectData.add(new MiniProjectData(0, 10, 2, 25));
-            miniProjectData.add(new MiniProjectData(1, 9, 5, 15));
-            miniProjectData.add(new MiniProjectData(2, 8, 6, 15));
-            miniProjectData.add(new MiniProjectData(3, 7, 3, 15));
-            miniProjectData.add(new MiniProjectData(4, 6, 8, 10));
-            miniProjectData.add(new MiniProjectData(5, 5, 4, 10));
-            miniProjectData.add(new MiniProjectData(6, 4, 3, 15));
-            miniProjectData.add(new MiniProjectData(7, 4, 5, 14));
-            miniProjectData.add(new MiniProjectData(8, 3, 3, 25));
-            miniProjectData.add(new MiniProjectData(9, 3, 3, 13));
-            miniProjectData.add(new MiniProjectData(10, 2, 2, 20));
-            miniProjectData.add(new MiniProjectData(11, 2, 2, 10));
+            miniProjectData.add(new MiniProjectData(0, 10, 2, 10.0));
+            miniProjectData.add(new MiniProjectData(1, 9, 5, 13.0));
+            miniProjectData.add(new MiniProjectData(2, 8, 6, 25.0));
+            miniProjectData.add(new MiniProjectData(3, 7, 3, 20.0));
+            miniProjectData.add(new MiniProjectData(4, 6, 8, 25.0));
+            miniProjectData.add(new MiniProjectData(5, 5, 4, 15.0));
+            miniProjectData.add(new MiniProjectData(6, 4, 3, 14.0));
+            miniProjectData.add(new MiniProjectData(7, 4, 5, 15.0));
+            miniProjectData.add(new MiniProjectData(8, 3, 3, 10.0));
+            miniProjectData.add(new MiniProjectData(9, 3, 3, 10.0));
+            miniProjectData.add(new MiniProjectData(10, 2, 2, 15.0));
+            miniProjectData.add(new MiniProjectData(11, 2, 2, 15.0));
             rowNum = miniProjectData.size();
             tfPercentQueue.setText("2");
             miniProjectTable.setItems(miniProjectData);
@@ -213,9 +212,32 @@ public class QueuesController extends NavigationController implements Initializa
                     ex.printStackTrace();
                 }
             }
+        } else if (actionEvent.getSource().equals(countNPV)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
+                List<NPVData> npvDatas = convertToNPVData();
+                NPVController controller = new NPVController(npvDatas.size(), npvDatas);
+                loader.setController(controller);
+                AnchorPane pane = loader.load();
+
+                Stage queuesStage = new Stage();
+                Scene queuesScene = new Scene(pane);
+                queuesStage.setScene(queuesScene);
+                queuesStage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
+    private List<NPVData> convertToNPVData() {
+        List<NPVData> result = new ArrayList<>();
+        PlanData sumOfR = PlanDataCounter.getSumOfRFlow(plans);
+        for (int i = 0; i < sumOfR.getProfitByMiniProject().size(); i++) {
+            result.add(new NPVData(i, sumOfR.getProfitByMiniProject().get(i)));
+        }
+        return result;
+    }
 
     public static boolean isNewWindowCreated() {
         return isNewWindowCreated;

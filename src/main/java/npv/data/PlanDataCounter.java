@@ -17,30 +17,30 @@ public class PlanDataCounter {
         this.queues = queueData;
         this.periodsTillEnd = calculateTimeScaleForQueues();
     }
-
+    //this method consumes MiniProjectData and produces PlanData
     public void count() throws Exception {
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
             ArrayList<PlanData> plansPerQueue = new ArrayList<>();
             int sumOfTime = 0;
             for (MiniProjectData miniProject : queues.get(queueNumber).getMiniProjects()) {
-                PlanData planData = new PlanData(miniProject.getPeriodI());
+                PlanData planData = new PlanData(miniProject.getPeriodI(), miniProject.getGain());
                 int time = miniProject.getTime();
                 sumOfTime += time;
                 if (plansPerQueue.size() == 0) {
                     //for 1st MP
                     for (int i = 0; i < time; i++) {
-                        planData.addToMiniProjectProfit(0);
+                        planData.addToMiniProjectProfit(0.0);
                     }
                     for (int j = time + 1; j <= periodsTillEnd; j++) {
-                        planData.addToMiniProjectProfit(miniProject.getIncome());
+                        planData.addToMiniProjectProfit(miniProject.getIncome().doubleValue());
                     }
                     plansPerQueue.add(planData);
                 } else {
                     for (int i = 0; i < sumOfTime; i++) {
-                        planData.addToMiniProjectProfit(0);
+                        planData.addToMiniProjectProfit(0.0);
                     }
                     for (int j = sumOfTime + 1; j <= periodsTillEnd; j++) {
-                        planData.addToMiniProjectProfit(miniProject.getIncome());
+                        planData.addToMiniProjectProfit(miniProject.getIncome().doubleValue());
                     }
                     plansPerQueue.add(planData);
                 }
@@ -73,10 +73,10 @@ public class PlanDataCounter {
     private void calculateRFlow() throws Exception {
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
             //fake MiniProject with sum
-            PlanData rFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R); //  Life, The Universe, and Everything
+            PlanData rFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R, 0.0); //  Life, The Universe, and Everything
             ArrayList<PlanData> currentQueuePlan = plans.get(queueNumber);
             for (int i = 0; i < periodsTillEnd; i++) {
-                Integer sumPerPeriod = 0;
+                Double sumPerPeriod = 0.0;
                 for (PlanData planData : currentQueuePlan) {
                     sumPerPeriod += planData.getProfitByMiniProject().get(i);
                 }
@@ -101,7 +101,7 @@ public class PlanDataCounter {
                 } else {
                     resultString.append("" + "\t");
                 }
-                for (Integer period : planData.getProfitByMiniProject()) {
+                for (Double period : planData.getProfitByMiniProject()) {
                     resultString.append(period + " ");
                 }
                 resultString.append("\n");
@@ -116,17 +116,17 @@ public class PlanDataCounter {
     }
 
     public static PlanData getSumOfRFlow(LinkedHashMap<Integer, ArrayList<PlanData>> plans) {
-        List<Integer> result
+        List<Double> result
                 = new ArrayList<>(plans.get(0).get(0).getProfitByMiniProject().size());
         for (Map.Entry<Integer, ArrayList<PlanData>> plan : plans.entrySet()) {
             for (PlanData miniProject : plan.getValue()) {
-                if (miniProject.getMiniProjectNumber() == FAKE_MINIPROJECT_NUMBER_FOR_R) {
-                    ArrayList<Integer> profit = miniProject.getProfitByMiniProject();
+                if (miniProject.getMiniProjectNumber().equals(FAKE_MINIPROJECT_NUMBER_FOR_R)) {
+                    ArrayList<Double> profit = miniProject.getProfitByMiniProject();
                     if (result.isEmpty()) {
                         result.addAll(profit);
                     } else {
                         for (int i = 0; i < profit.size(); i++) {
-                            result.add(i, result.remove(i) + profit.get(i));
+                            result.add(i, result.remove(i) + profit.get(i)); //sum of Rs from different queues
                         }
                     }
                 }
@@ -134,5 +134,27 @@ public class PlanDataCounter {
         }
         PlanData sumOfRFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R_SUM, new ArrayList<>(result));
         return sumOfRFlow;
+    }
+
+    //returns List of sum values per queues with according order
+    public static List<Double> getMiniProjectsCostsPerQueue(LinkedHashMap<Integer, ArrayList<PlanData>> plans) {
+        List<Double> sumOfMiniProjectsCostPerQueue = new ArrayList<>();
+        for (Map.Entry<Integer, ArrayList<PlanData>> plan : plans.entrySet()) {
+            Double sumOfCost = 0.0;
+            for (PlanData planData : plan.getValue()) {
+                sumOfCost += planData.getMiniProjectCost();
+            }
+            sumOfMiniProjectsCostPerQueue.add(sumOfCost);
+        }
+        return sumOfMiniProjectsCostPerQueue;
+    }
+
+    public static Double getCostOfAllQueues(LinkedHashMap<Integer, ArrayList<PlanData>> plans) {
+        Double result = 0.0;
+        List<Double> costs = getMiniProjectsCostsPerQueue(plans);
+        for (Double cost : costs) {
+            result += cost;
+        }
+        return result;
     }
 }

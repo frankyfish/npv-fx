@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -41,6 +42,10 @@ public class NPVController extends NavigationController implements Initializable
     @FXML private Button addRow;
     ObservableList data = FXCollections.observableArrayList();
 
+    public NPVController(int numberOfRows, List<? extends NPVData> newData) {
+        this.rowNumber = numberOfRows;
+        this.data = FXCollections.observableArrayList(newData);
+    }
 
     @FXML
     public void handleNpvActions(ActionEvent event) throws Exception, IOException {
