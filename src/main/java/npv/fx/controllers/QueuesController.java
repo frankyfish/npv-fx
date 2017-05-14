@@ -92,6 +92,7 @@ public class QueuesController extends NavigationController implements Initializa
             ControllerUtils.setTableColumnsDraggableFalse(miniProjectTable);
             miniProjectTable.setItems(miniProjectData);
 
+            btShowInNewWindow.setVisible(false);
             cbAlgorithmSelection.
                     setItems(FXCollections.observableArrayList(ALGORITHM_I, ALGORITHM_II, ALGORITHM_III));
     }
@@ -144,7 +145,7 @@ public class QueuesController extends NavigationController implements Initializa
                 Algorithm selectedAlgorithm;
                 String choiceBoxValue = (String) cbAlgorithmSelection.getValue();
                 if (choiceBoxValue != null) {
-                    PlanDataCounter planDataCounter = null; //TODO: 07.04.17  change this row
+                    PlanDataCounter planDataCounter = null;
                     switch (cbAlgorithmSelection.getValue().toString()) {
                         case ALGORITHM_I:
                             selectedAlgorithm = new AlgorithmI();
@@ -171,6 +172,7 @@ public class QueuesController extends NavigationController implements Initializa
                     if (planDataCounter != null) {
                         plans = planDataCounter.getPlans();
                         taQueuesProfit.setText(planDataCounter.getStringRepresentation());
+                        btShowInNewWindow.setVisible(true);
                     }
                 } else {
                     new UINotification(UINotification.Type.ERROR, "", "algorithm type");

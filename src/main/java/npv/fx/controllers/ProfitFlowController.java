@@ -101,6 +101,7 @@ public class ProfitFlowController extends NavigationController implements Initia
                     row.add(i, profits.get(i).toString());
                 }
                 if(PlanDataCounter.FAKE_MINIPROJECT_NUMBER_FOR_R.equals(planData.getMiniProjectNumber())) {
+                    row.set(0, costs.remove(0).toString());//adding sum of cost per queue
                     row.add(numberOfColumns, "R");
                 } else {
                     row.add(numberOfColumns, planData.getMiniProjectNumber().toString());
