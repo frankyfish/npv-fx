@@ -44,6 +44,8 @@ public class NavigationController extends GUIManager implements Initializable {
         }
     }
 
+
+
     protected void setCalendarPlans(LinkedHashMap<Integer, ArrayList<PlanData>> calendarPlans) {
         this.calendarPlans.putAll(calendarPlans);
     }

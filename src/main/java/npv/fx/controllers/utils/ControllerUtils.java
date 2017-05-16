@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,6 +43,11 @@ public class ControllerUtils {
     public static void goToNewScene(Parent fxml, Stage stage) {
         Scene scene = new Scene(fxml);
         stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void goToNewScene(Pane pane, Stage stage) {
+        stage.setScene(new Scene(pane));
         stage.show();
     }
 

@@ -2,9 +2,12 @@ package npv.fx.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import npv.fx.GUIConstants;
 import npv.fx.GUIManager;
@@ -29,15 +32,18 @@ public class MainMenuController extends NavigationController implements Initiali
     private void handleButtonAction(ActionEvent event) throws Exception, IOException {
         Stage currentStage = null;
         Parent layout = null;
-        //todo change button1 block to another, useful one
         if (event.getSource().equals(queues)) {
             layout = loadLayout(getClass().getResource(GUIConstants.FXML_QUEUES_LAYOUT));
             currentStage = (Stage) queues.getScene().getWindow();
             ControllerUtils.goToNewScene(layout, currentStage);
         } else if (event.getSource().equals(npv)) {
-            layout = loadLayout(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
+//            layout = loadLayout(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
+            NPVController controller = new NPVController();
+            loader.setController(controller);
+            AnchorPane pane = loader.load();
             currentStage = (Stage) npv.getScene().getWindow();
-            ControllerUtils.goToNewScene(layout, currentStage);
+            ControllerUtils.goToNewScene(pane, currentStage);
         }
     }
 }

@@ -42,6 +42,8 @@ public class NPVController extends NavigationController implements Initializable
     @FXML private Button addRow;
     ObservableList data = FXCollections.observableArrayList();
 
+    public NPVController(){}
+
     public NPVController(int numberOfRows, List<? extends NPVData> newData) {
         this.rowNumber = numberOfRows;
         this.data = FXCollections.observableArrayList(newData);
