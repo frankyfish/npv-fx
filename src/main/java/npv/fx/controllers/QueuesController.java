@@ -218,7 +218,8 @@ public class QueuesController extends NavigationController implements Initializa
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
                 List<NPVData> npvDatas = convertToNPVData();
-                NPVController controller = new NPVController(npvDatas.size(), npvDatas);
+                Double percentage = Double.valueOf(tfPercentQueue.getText());
+                NPVController controller = new NPVController(npvDatas.size(), npvDatas, percentage);
                 loader.setController(controller);
                 AnchorPane pane = loader.load();
 
@@ -236,8 +237,10 @@ public class QueuesController extends NavigationController implements Initializa
         List<NPVData> result = new ArrayList<>();
         PlanData sumOfR = PlanDataCounter.getSumOfRFlow(plans);
         for (int i = 0; i < sumOfR.getProfitByMiniProject().size(); i++) {
-            result.add(new NPVData(i, sumOfR.getProfitByMiniProject().get(i)));
+            result.add(new NPVData(i + 1, sumOfR.getProfitByMiniProject().get(i)));
         }
+        //adding sum of costs at the beginning
+        result.add(0, new NPVData(0, PlanDataCounter.getCostOfAllQueues(plans)));
         return result;
     }
 

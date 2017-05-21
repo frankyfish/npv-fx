@@ -6,10 +6,13 @@
 package npv.fx;
 
 import java.io.IOException;
+
+import com.sun.corba.se.spi.ior.iiop.GIOPVersion;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -32,7 +35,8 @@ public class GUIManager extends Application {
         root = FXMLLoader.load(getClass().getResource("layouts/MainMenu.fxml"));
         //root = FXMLLoader.load(getClass().getResource("layouts/NPV.fxml"));
         scene = new Scene(root);
-
+        stage.setTitle("NPV2");
+        stage.getIcons().add(new Image(GUIManager.class.getResourceAsStream("icons/tree-leave.png")));
         stage.setScene(scene);
         stage.show();
     }

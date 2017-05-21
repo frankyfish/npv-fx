@@ -31,6 +31,7 @@ public class NPVController extends NavigationController implements Initializable
     @FXML private Button btnCount;
     @FXML private TextField tfNewFund;
     @FXML private TextField tfAlpha;
+    private Double preInitializeAlpaValue;
     //table NPV
     int rowNumber = 0;
     @FXML private TableView<NPVData> npvTable;
@@ -47,6 +48,14 @@ public class NPVController extends NavigationController implements Initializable
     public NPVController(int numberOfRows, List<? extends NPVData> newData) {
         this.rowNumber = numberOfRows;
         this.data = FXCollections.observableArrayList(newData);
+    }
+
+    public NPVController(int numberOfRows, List<? extends NPVData> newData, Double percentage) {
+        this.rowNumber = numberOfRows;
+        this.data = FXCollections.observableArrayList(newData);
+        if (percentage != null) {
+            preInitializeAlpaValue = percentage;
+        }
     }
 
     @FXML
@@ -119,5 +128,9 @@ public class NPVController extends NavigationController implements Initializable
             netPresentValue.setCellValueFactory(new PropertyValueFactory<>("netPresentValue"));
             ControllerUtils.setTableColumnsDraggableFalse(npvTable);//for moving cells
             npvTable.setItems(data);
+
+            if (preInitializeAlpaValue != null) {
+                tfAlpha.setText(preInitializeAlpaValue.toString());
+            }
     }
 }
