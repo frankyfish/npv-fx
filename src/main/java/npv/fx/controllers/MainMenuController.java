@@ -24,6 +24,7 @@ public class MainMenuController extends NavigationController implements Initiali
 
     @FXML private Button queues;
     @FXML private Button npv;
+    @FXML private Button btAbout;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
@@ -37,13 +38,20 @@ public class MainMenuController extends NavigationController implements Initiali
             currentStage = (Stage) queues.getScene().getWindow();
             ControllerUtils.goToNewScene(layout, currentStage);
         } else if (event.getSource().equals(npv)) {
-//            layout = loadLayout(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
             FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_NPV_LAYOUT));
             NPVController controller = new NPVController();
             loader.setController(controller);
             AnchorPane pane = loader.load();
             currentStage = (Stage) npv.getScene().getWindow();
             ControllerUtils.goToNewScene(pane, currentStage);
+        } else if (event.getSource().equals(btAbout)) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_ABOUT_WINDOW_LAYOUT));
+            AnchorPane pane = loader.load();
+
+            Stage stage = new Stage();
+            Scene aboutScene = new Scene(pane);
+            stage.setScene(aboutScene);
+            stage.show();
         }
     }
 }
