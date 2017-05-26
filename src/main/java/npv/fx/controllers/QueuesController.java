@@ -65,6 +65,7 @@ public class QueuesController extends NavigationController implements Initializa
     @FXML private ChoiceBox cbAlgorithmSelection;
     @FXML private Button btShowInNewWindow;
     @FXML private Button countNPV;
+    @FXML private Button btHelp;
     //for limiting new windows creation
     static boolean isNewWindowCreated = false;
     //table for queues
@@ -227,6 +228,20 @@ public class QueuesController extends NavigationController implements Initializa
                 Scene queuesScene = new Scene(pane);
                 queuesStage.setScene(queuesScene);
                 queuesStage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else if (actionEvent.getSource().equals(btHelp)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_HELP_WINDOW_LAYOUT));
+                HelpController controller = new HelpController();
+                loader.setController(controller);
+                AnchorPane pane = loader.load();
+                Stage helpStage = new Stage();
+                Scene helpScene = new Scene(pane);
+                helpStage.setScene(helpScene);
+                helpStage.setTitle("Help");
+                helpStage.show();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
