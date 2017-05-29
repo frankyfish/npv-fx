@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.QueuesController">
+<AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.QueuesController">
     <children>
         <ToolBar prefHeight="40.0" prefWidth="978.0">
             <items>
@@ -38,19 +38,22 @@
             <TableColumn fx:id="factorK" prefWidth="75.0" text="k" />
         </columns>
       </TableView>
-      <TextField fx:id="tfT" layoutX="122.0" layoutY="454.0" prefHeight="26.0" prefWidth="58.0" promptText="t" />
-      <TextField fx:id="tfD" layoutX="197.0" layoutY="454.0" prefHeight="26.0" prefWidth="58.0" promptText="D" />
-      <TextField fx:id="tfC" layoutX="272.0" layoutY="454.0" prefHeight="26.0" prefWidth="58.0" promptText="C" />
+      <TextField fx:id="tfT" layoutX="111.0" layoutY="453.0" prefHeight="26.0" prefWidth="58.0" promptText="t" />
+      <TextField fx:id="tfD" layoutX="201.0" layoutY="453.0" prefHeight="26.0" prefWidth="58.0" promptText="D" />
+      <TextField fx:id="tfC" layoutX="281.0" layoutY="454.0" prefHeight="26.0" prefWidth="58.0" promptText="C" />
       <Button fx:id="btnAdd" layoutX="346.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Add" />
-      <Button fx:id="btnCountFactorK" layoutX="432.0" layoutY="557.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Count" />
+      <Button fx:id="btnCountFactorK" layoutX="668.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Count" />
       <TextField fx:id="tfPercentQueue" layoutX="198.0" layoutY="518.0" prefHeight="26.0" prefWidth="57.0" promptText="\%" />
       <Button fx:id="testBtn" layoutX="264.0" layoutY="518.0" mnemonicParsing="false" onAction="#handleQueueActions" text="TestData" />
       <TextArea fx:id="taQueues" editable="false" layoutX="515.0" layoutY="67.0" prefHeight="64.0" prefWidth="411.0" promptText="Results of sorting will be here" />
-      <ChoiceBox fx:id="cbAlgorithmSelection" layoutX="197.0" layoutY="557.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="cbAlgorithmSelection" layoutX="451.0" layoutY="518.0" prefWidth="150.0" />
       <Separator layoutX="63.0" layoutY="504.0" prefHeight="0.0" prefWidth="862.0" />
       <Text layoutX="146.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Alpha" />
-      <Text layoutX="140.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by" />
+      <Text layoutX="394.0" layoutY="535.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by" />
       <TextArea fx:id="taQueuesProfit" editable="false" layoutX="515.0" layoutY="141.0" prefHeight="302.0" prefWidth="411.0" promptText="Result of profit calculation will be here" />
       <Button fx:id="btShowInNewWindow" layoutX="655.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Separate Window" />
+      <Text layoutX="102.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="t" />
+      <Text layoutX="188.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
+      <Text layoutX="267.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" />
     </children>
 </AnchorPane>
