@@ -55,5 +55,6 @@
       <Text layoutX="102.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="t" />
       <Text layoutX="188.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D" />
       <Text layoutX="267.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C" />
+      <Button fx:id="btGraph" layoutX="813.0" layoutY="455.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Graph" />
     </children>
 </AnchorPane>

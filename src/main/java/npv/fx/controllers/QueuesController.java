@@ -66,6 +66,7 @@ public class QueuesController extends NavigationController implements Initializa
     @FXML private Button btShowInNewWindow;
     @FXML private Button countNPV;
     @FXML private Button btHelp;
+    @FXML private Button btGraph;
     //for limiting new windows creation
     static boolean isNewWindowCreated = false;
     //table for queues
@@ -245,6 +246,13 @@ public class QueuesController extends NavigationController implements Initializa
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+        } else if (actionEvent.getSource().equals(btGraph)) {
+            AnchorPane pane = new AnchorPane();
+            Scene gantScene = new Scene(pane);
+            Stage gantStage = new Stage();
+            gantStage.setScene(gantScene);
+            GanttChartSample ganttChart = new GanttChartSample(plans);
+            ganttChart.start(gantStage);
         }
     }
 
