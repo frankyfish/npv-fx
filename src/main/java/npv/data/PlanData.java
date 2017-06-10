@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class PlanData {
     private Integer miniProjectNumber;
     private Double miniProjectCost;
+    private Integer miniProjectTime;
     private ArrayList<Double> profitByMiniProject;
 
     public PlanData(Integer miniProjectN) {
@@ -18,8 +19,9 @@ public class PlanData {
         this.profitByMiniProject= new ArrayList<>();
     }
 
-    public PlanData(Integer miniProjectN, Double cost) {
+    public PlanData(Integer miniProjectN, Double cost, Integer time) {
         this.miniProjectNumber = miniProjectN;
+        this.miniProjectTime = time;
         this.miniProjectCost = cost;
         this.profitByMiniProject= new ArrayList<>();
     }
@@ -58,6 +60,14 @@ public class PlanData {
 
     public void setProfitByMiniProject(ArrayList<Double> profitByMiniProject) {
         this.profitByMiniProject = profitByMiniProject;
+    }
+
+    public Integer getMiniProjectTime() {
+        return miniProjectTime;
+    }
+
+    public void setMiniProjectTime(Integer miniProjectTime) {
+        this.miniProjectTime = miniProjectTime;
     }
 
     public ArrayList<Double> getMiniProjectNumberAndProfits() {

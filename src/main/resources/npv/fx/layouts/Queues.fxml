@@ -13,18 +13,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.QueuesController">
+<AnchorPane id="AnchorPane" prefHeight="589.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="npv.fx.controllers.QueuesController">
     <children>
         <ToolBar prefHeight="40.0" prefWidth="978.0">
             <items>
                 <Button fx:id="returnToRoot" mnemonicParsing="false" onAction="#handleControlButtonAction" text="Back" />
+            <Button fx:id="btHelp" mnemonicParsing="false" onAction="#handleQueueActions" text="Help" />
                 <!--used to move btns to the right 
                 http://stackoverflow.com/questions/24896498/how-to-right-allign-a-button-in-java-fx-toolbar
                 -->
-                <Pane prefHeight="28.0" prefWidth="56.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button fx:id="btHelp" layoutY="1.0" mnemonicParsing="false" onAction="#handleQueueActions" text="Help" />
-               </children></Pane>
+                <Pane prefHeight="28.0" prefWidth="56.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="countNPV" mnemonicParsing="false" onAction="#handleQueueActions" text="Count NPV" />
             </items>
         </ToolBar>

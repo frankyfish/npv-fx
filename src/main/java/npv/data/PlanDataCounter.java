@@ -23,7 +23,7 @@ public class PlanDataCounter {
             ArrayList<PlanData> plansPerQueue = new ArrayList<>();
             int sumOfTime = 0;
             for (MiniProjectData miniProject : queues.get(queueNumber).getMiniProjects()) {
-                PlanData planData = new PlanData(miniProject.getPeriodI(), miniProject.getGain() * -1);
+                PlanData planData = new PlanData(miniProject.getPeriodI(), miniProject.getGain() * -1, miniProject.getTime());
                 int time = miniProject.getTime();
                 sumOfTime += time;
                 if (plansPerQueue.size() == 0) {
@@ -73,7 +73,7 @@ public class PlanDataCounter {
     private void calculateRFlow() throws Exception {
         for (int queueNumber = 0; queueNumber < queues.size(); queueNumber++) {
             //fake MiniProject with sum
-            PlanData rFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R, 0.0); //  Life, The Universe, and Everything
+            PlanData rFlow = new PlanData(FAKE_MINIPROJECT_NUMBER_FOR_R, 0.0, 0); //  Life, The Universe, and Everything
             ArrayList<PlanData> currentQueuePlan = plans.get(queueNumber);
             for (int i = 0; i < periodsTillEnd; i++) {
                 Double sumPerPeriod = 0.0;

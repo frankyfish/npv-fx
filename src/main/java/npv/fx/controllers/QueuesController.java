@@ -12,8 +12,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import npv.fx.GUIConstants;
+import npv.fx.GUIManager;
 import npv.fx.controllers.NavigationController;
 import npv.fx.controllers.utils.ControllerUtils;
 import javafx.beans.value.ChangeListener;
@@ -211,6 +213,8 @@ public class QueuesController extends NavigationController implements Initializa
                     Stage queuesStage = new Stage();
                     Scene queuesScene = new Scene(pane);
                     queuesStage.setScene(queuesScene);
+                    queuesStage.getIcons().add(new Image(GUIManager.class.getResourceAsStream("icons/tree-leave.png")));
+                    queuesStage.setTitle("Profit Flow");
                     queuesStage.show();
                 } catch (IOException ex) {
                     ex.printStackTrace();
