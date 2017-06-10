@@ -22,6 +22,7 @@ public class GUIConstants implements Initializable {
     public static final String FXML_PROFIT_FLOW_LAYOUT = String.valueOf("/npv/fx/layouts/ProfitFlow.fxml");
     public static final String FXML_ABOUT_WINDOW_LAYOUT = String.valueOf("/npv/fx/layouts/About.fxml");
     public static final String FXML_HELP_WINDOW_LAYOUT = String.valueOf("/npv/fx/layouts/Help.fxml");
+    public static final String CSS_GANTT_CHART = String.valueOf("/npv/fx/styles/ganttchart.css");
 
     //Queues.fxml
     //choicebox values

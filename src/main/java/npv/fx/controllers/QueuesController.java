@@ -251,7 +251,8 @@ public class QueuesController extends NavigationController implements Initializa
             Scene gantScene = new Scene(pane);
             Stage gantStage = new Stage();
             gantStage.setScene(gantScene);
-            GanttChartSample ganttChart = new GanttChartSample(plans);
+            String url = getClass().getResource(GUIConstants.CSS_GANTT_CHART).toExternalForm();
+            GanttChartSample ganttChart = new GanttChartSample(plans, url);
             ganttChart.start(gantStage);
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToolBar?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="607.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="708.0">
+      <ToolBar prefHeight="40.0" prefWidth="864.0">
          <items>
             <Pane HBox.hgrow="ALWAYS">
                <children>
@@ -21,20 +22,20 @@
             </Pane>
          </items>
       </ToolBar>
-      <TabPane layoutX="-1.0" layoutY="40.0" prefHeight="568.0" prefWidth="708.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="-1.0" layoutY="40.0" prefHeight="680.0" prefWidth="864.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Algorithm I">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="507.0">
-                     <children>
-                        <ImageView fitHeight="489.0" fitWidth="407.0" layoutX="32.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <ImageView fitHeight="1453.0" fitWidth="670.0" pickOnBounds="true">
                            <image>
-                              <Image url="@../images/psb.jpg" />
+                              <Image url="@../images/algorithm1.jpg" />
                            </image>
                         </ImageView>
-                     </children>
-                  </AnchorPane>
-            </content>
+                     </content>
+                  </ScrollPane>
+               </content>
           </Tab>
           <Tab text="Algorithm II">
             <content>
