@@ -96,7 +96,7 @@ public class QueuesController extends NavigationController implements Initializa
             ControllerUtils.setTableColumnsDraggableFalse(miniProjectTable);
             miniProjectTable.setItems(miniProjectData);
 
-            btShowInNewWindow.setVisible(false);
+//            btShowInNewWindow.setVisible(false);
             cbAlgorithmSelection.
                     setItems(FXCollections.observableArrayList(ALGORITHM_I, ALGORITHM_II, ALGORITHM_III));
     }
@@ -176,7 +176,7 @@ public class QueuesController extends NavigationController implements Initializa
                     if (planDataCounter != null) {
                         plans = planDataCounter.getPlans();
                         taQueuesProfit.setText(planDataCounter.getStringRepresentation());
-                        btShowInNewWindow.setVisible(true);
+//                        btShowInNewWindow.setVisible(true);
                     }
                 } else {
                     new UINotification(UINotification.Type.ERROR, "", "algorithm type");
