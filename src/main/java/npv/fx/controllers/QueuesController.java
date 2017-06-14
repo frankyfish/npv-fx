@@ -41,9 +41,7 @@ import npv.data.utils.QueueDataUtils;
 import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
-import static npv.fx.GUIConstants.ALGORITHM_I;
-import static npv.fx.GUIConstants.ALGORITHM_II;
-import static npv.fx.GUIConstants.ALGORITHM_III;
+import static npv.fx.GUIConstants.*;
 
 /**
  * @author nima0814
@@ -231,6 +229,8 @@ public class QueuesController extends NavigationController implements Initializa
 
                 Stage queuesStage = new Stage();
                 Scene queuesScene = new Scene(pane);
+                queuesStage.getIcons().add(new Image(GUIManager.class.getResourceAsStream(APP_ICON)));
+                queuesStage.setTitle("NPV");
                 queuesStage.setScene(queuesScene);
                 queuesStage.show();
             } catch (IOException ex) {

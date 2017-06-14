@@ -16,15 +16,20 @@ import javafx.stage.Stage;
 import npv.data.PlanData;
 import npv.data.PlanDataCounter;
 import npv.fx.GUIManager;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
+
+import static npv.fx.GUIConstants.APP_ICON;
 
 
 public class GanttChartSample extends Application {
 
     private LinkedHashMap<Integer, ArrayList<PlanData>> plans;
     private String urlToCss;
-    private List<String> magicColors = new ArrayList<String>(Arrays.asList("status-red", "status-green", "status-blue"));
+    private List<String> magicColors = new ArrayList<String>(Arrays.asList(
+            "status-red", "status-green", "status-blue", "status-orange",
+            "status-silver", "status-light-blue", "status-flying-banana", "status-morning-sky"));
     private String lastMagicColor;
 
     public GanttChartSample(LinkedHashMap<Integer, ArrayList<PlanData>> p, String url) {
@@ -35,14 +40,16 @@ public class GanttChartSample extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Queues Graphs");
-        stage.getIcons().add(new Image(GUIManager.class.getResourceAsStream("icons/tree-leave.png")));
+        stage.getIcons().add(new Image(GUIManager.class.getResourceAsStream(APP_ICON)));
         String[] machines = buildQueuesNames();
+        ArrayUtils.reverse(machines);//to make ordering from top to bottom
 
         Integer[] queuesNames = new Integer[plans.keySet().size()];
         Object[] keys = plans.keySet().toArray();
         for (int i = 0; i < queuesNames.length; i++) {
             queuesNames[i] = Integer.valueOf(keys[i].toString());
         }
+        ArrayUtils.reverse(queuesNames);//to make ordering from top to bottom
 
         final NumberAxis xAxis = new NumberAxis();
         final CategoryAxis yAxis = new CategoryAxis();

@@ -7,3 +7,19 @@
 .status-blue {
     -fx-background-color:rgba(0,0,128,0.7);
 }
+.status-orange {
+    -fx-background-color:rgba(244,137,37,0.7);
+}
+.status-silver {
+    -fx-background-color:rgba(172, 172, 172,0.7);
+}
+.status-light-blue {
+    -fx-background-color:rgba(51, 153, 255, 0.7);
+}
+.status-flying-banana {
+    -fx-background-color:rgba(246, 218, 60,0.7);
+}
+.status-morning-sky {
+    -fx-background-color:rgba(83, 69, 211,0.7);
+}
+/*more colors @ https://www.w3schools.com/colors/colors_picker.asp*/
