@@ -8,6 +8,9 @@ package npv.data;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  *
  * @author nick
@@ -60,6 +63,23 @@ public class NPVDataCounter {
         }
 
         System.out.println("NPV=" + npv[npv.length - 1]);
+    }
+
+    public void round(int places) {
+        for (int i = 0; i < this.funds.length; i++) {
+//            funds[i] = round(funds[i], places);
+            r[i] = round(r[i], places);
+            a[i] = round(a[i], places);
+            npv[i] = round(npv[i], places);
+        }
+    }
+
+    public static Double round(Double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return Double.valueOf(bd.doubleValue());
     }
 
     public Double[] getFunds() {

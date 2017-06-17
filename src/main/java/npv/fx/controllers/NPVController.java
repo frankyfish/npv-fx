@@ -32,6 +32,7 @@ public class NPVController extends NavigationController implements Initializable
     @FXML private Button btnCount;
     @FXML private TextField tfNewFund;
     @FXML private TextField tfAlpha;
+    @FXML private TextField tfDecimalPlaces;
     private Double preInitializeAlpaValue;
     //table NPV
     int rowNumber = 0;
@@ -82,6 +83,7 @@ public class NPVController extends NavigationController implements Initializable
                 new UINotification(UINotification.Type.ERROR, "Alpha value is not specified", "Alpha");
                 return;
             }
+            validateDecimalPlaces();
             Double alpha = Double.valueOf(tfAlpha.getText());
 
             NPVDataCounter nDC =
@@ -89,6 +91,7 @@ public class NPVController extends NavigationController implements Initializable
             nDC.countNpv();
             ArrayList<NPVData> npvDat = new ArrayList<>();
             ControllerUtils.clearTableBeforeShowCountResults(npvTable);
+            nDC.round(Integer.valueOf(tfDecimalPlaces.getText()));
             for (int i = 0; i < rowNumber; i++) {
                 npvDat.add(
                         new NPVData(i, nDC.getFunds()[i], nDC.getR()[i],
@@ -118,8 +121,17 @@ public class NPVController extends NavigationController implements Initializable
         }
     }
 
+    private void validateDecimalPlaces() {
+        if (tfDecimalPlaces.getText().isEmpty()) {
+            tfDecimalPlaces.setText("2");//setting default value
+        } else if (Integer.valueOf(tfDecimalPlaces.getText()) > 12){
+            new UINotification(UINotification.Type.INFO, "The maximum accuracy is reached.",
+                    "accuracy will be ignored, highest possible will be used");
+        }
+    }
+
     private boolean validateAlpha() {
-        if (!this.tfAlpha.getText().contains(".")) {
+        if (this.tfAlpha.getText().isEmpty()) {
             return false;
         }
         return true;

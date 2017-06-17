@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="592.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ToolBar prefHeight="40.0" prefWidth="760.0">
             <items>
@@ -41,5 +41,7 @@
       <Separator layoutX="39.0" layoutY="525.0" prefHeight="4.0" prefWidth="661.0" />
       <Text layoutX="41.0" layoutY="504.0" strokeType="OUTSIDE" strokeWidth="0.0" text="R" />
       <Text layoutX="534.0" layoutY="502.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NPV" />
+      <TextField fx:id="tfDecimalPlaces" layoutX="570.0" layoutY="538.0" onAction="#handleNpvActions" prefHeight="25.0" prefWidth="31.0" text="2" />
+      <Text layoutX="510.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Accuracy" />
     </children>
 </AnchorPane>
