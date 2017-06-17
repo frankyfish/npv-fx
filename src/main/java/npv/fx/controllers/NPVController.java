@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import npv.data.NPVData;
 import npv.data.NPVDataCounter;
+import npv.fx.notifications.UINotification;
 import npv.importer.XlsImporter;
 
 import java.io.File;
@@ -77,7 +78,12 @@ public class NPVController extends NavigationController implements Initializable
             rowNumber++;
             data.add(npvdat);
         } else if (event.getSource().equals(btnCount)) {
+            if (tfAlpha.getText().isEmpty()) {
+                new UINotification(UINotification.Type.ERROR, "Alpha value is not specified", "Alpha");
+                return;
+            }
             Double alpha = Double.valueOf(tfAlpha.getText());
+
             NPVDataCounter nDC =
                     new NPVDataCounter(npvTable, rowNumber, alpha);
             nDC.countNpv();

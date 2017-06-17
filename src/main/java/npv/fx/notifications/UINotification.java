@@ -17,27 +17,31 @@ public class UINotification {
         switch (type) {
             case INFO:
                 alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Информационное окно");
+//                alert.setTitle("Информационное окно");
+                alert.setTitle("Information Window");
                 h = header.isEmpty() ? type.toString()
                         : header;
                 alert.setHeaderText(h);
                 break;
             case WARN:
                 alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Предупреждение");
+//                alert.setTitle("Предупреждение");
+                alert.setTitle("Warning");
                 h = header.isEmpty() ? type.toString()
                         : header;
                 alert.setHeaderText(h);
                 break;
             case ERROR:
                 alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Ошибка");
+//                alert.setTitle("Ошибка");
+                alert.setTitle("Error");
                 h = header.isEmpty() ? type.toString()
                         : header;
                 alert.setHeaderText(h);
                 break;
         }
-        alert.setContentText("Причина:\n недопустимое значение поля " + cause);
+//        alert.setContentText("Причина:\n недопустимое значение поля " + cause);
+        alert.setContentText("Caused by:\n Unacceptable value of " + cause);
         alert.showAndWait();
     }
 }

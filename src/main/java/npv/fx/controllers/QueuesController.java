@@ -119,7 +119,7 @@ public class QueuesController extends NavigationController implements Initializa
         } else if (actionEvent.getSource().equals(btnCountFactorK)) {
             try {
                 if (tfPercentQueue.getText().isEmpty()) {
-                    new UINotification(UINotification.Type.ERROR, "", "aльфа");
+                    new UINotification(UINotification.Type.ERROR, "Alpha value is not specified", "Alpha");
                     return;
                 }
                 Double alpha = Double.valueOf(tfPercentQueue.getText());
