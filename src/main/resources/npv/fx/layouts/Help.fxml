@@ -28,7 +28,7 @@
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">
                      <content>
-                        <ImageView fitHeight="1453.0" fitWidth="670.0" pickOnBounds="true">
+                        <ImageView fitHeight="1637.0" fitWidth="698.0" pickOnBounds="true">
                            <image>
                               <Image url="@../images/algorithm1.jpg" />
                            </image>
@@ -38,30 +38,30 @@
                </content>
           </Tab>
           <Tab text="Algorithm II">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="489.0" fitWidth="407.0" layoutX="151.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <ImageView fitHeight="1577.0" fitWidth="625.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/psb.jpg" />
+                              <Image url="@../images/algorithm2.jpg" />
                            </image>
                         </ImageView>
-                     </children>
-                  </AnchorPane>
-            </content>
+                     </content>
+                  </ScrollPane>
+               </content>
           </Tab>
             <Tab text="Algorithm III">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ImageView fitHeight="489.0" fitWidth="407.0" layoutX="278.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <ImageView fitHeight="1071.0" fitWidth="294.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/psb.jpg" />
+                              <Image url="@../images/algorithm3.jpg" />
                            </image>
                         </ImageView>
-                     </children>
-                  </AnchorPane>
-              </content>
+                     </content>
+                  </ScrollPane>
+               </content>
             </Tab>
         </tabs>
       </TabPane>
