@@ -1,6 +1,12 @@
 package npv.fx.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import npv.fx.GUIConstants;
+import npv.fx.GUIManager;
 import npv.fx.controllers.utils.ControllerUtils;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static npv.fx.GUIConstants.APP_ICON;
+
 /**
  * Created by nick on 24.04.17.
  */
@@ -33,6 +41,7 @@ public class NPVController extends NavigationController implements Initializable
     @FXML private TextField tfNewFund;
     @FXML private TextField tfAlpha;
     @FXML private TextField tfDecimalPlaces;
+    @FXML private Button btHelp;
     private Double preInitializeAlpaValue;
     //table NPV
     int rowNumber = 0;
@@ -117,6 +126,21 @@ public class NPVController extends NavigationController implements Initializable
                 npvdat = new NPVData(rowNumber, importedData[i]);
                 rowNumber++;
                 data.add(npvdat);
+            }
+        } else if (event.getSource().equals(btHelp)) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_HELP_NPV_WINDOW_LAYOUT));
+                HelpQueuesController controller = new HelpQueuesController();
+                loader.setController(controller);
+                AnchorPane pane = loader.load();
+                Stage helpStage = new Stage();
+                Scene helpScene = new Scene(pane);
+                helpStage.setScene(helpScene);
+                helpStage.setTitle("Help");
+                helpStage.getIcons().add(new Image(GUIManager.class.getResourceAsStream(APP_ICON)));
+                helpStage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }

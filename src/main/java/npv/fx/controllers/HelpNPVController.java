@@ -9,9 +9,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelpController extends NavigationController implements Initializable {
+/**
+ * Created by nick on 6/17/2017.
+ */
+public class HelpNPVController extends NavigationController implements Initializable {
 
-    @FXML private Button btClose;
+    @FXML
+    private Button btClose;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {}

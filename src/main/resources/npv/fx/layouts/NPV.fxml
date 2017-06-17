@@ -16,6 +16,7 @@
         <ToolBar prefHeight="40.0" prefWidth="760.0">
             <items>
                 <Button fx:id="returnToRoot" mnemonicParsing="false" onAction="#handleControlButtonAction" text="Back" />
+            <Button fx:id="btHelp" mnemonicParsing="false" onAction="#handleNpvActions" text="Help" />
                 <!--used to move btns to the right 
                 http://stackoverflow.com/questions/24896498/how-to-right-allign-a-button-in-java-fx-toolbar
                 -->

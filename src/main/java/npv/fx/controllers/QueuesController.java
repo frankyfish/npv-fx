@@ -5,9 +5,6 @@
  */
 package npv.fx.controllers;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -16,10 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import npv.fx.GUIConstants;
 import npv.fx.GUIManager;
-import npv.fx.controllers.NavigationController;
 import npv.fx.controllers.utils.ControllerUtils;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,7 +24,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import npv.data.*;
 import npv.data.algorithms.Algorithm;
@@ -39,7 +32,6 @@ import npv.data.algorithms.AlgorithmII;
 import npv.data.algorithms.AlgorithmIII;
 import npv.data.utils.QueueDataUtils;
 import npv.fx.notifications.UINotification;
-import npv.importer.XlsImporter;
 
 import static npv.fx.GUIConstants.*;
 
@@ -238,14 +230,15 @@ public class QueuesController extends NavigationController implements Initializa
             }
         } else if (actionEvent.getSource().equals(btHelp)) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_HELP_WINDOW_LAYOUT));
-                HelpController controller = new HelpController();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(GUIConstants.FXML_HELP_QUEUES_WINDOW_LAYOUT));
+                HelpQueuesController controller = new HelpQueuesController();
                 loader.setController(controller);
                 AnchorPane pane = loader.load();
                 Stage helpStage = new Stage();
                 Scene helpScene = new Scene(pane);
                 helpStage.setScene(helpScene);
                 helpStage.setTitle("Help");
+                helpStage.getIcons().add(new Image(GUIManager.class.getResourceAsStream(APP_ICON)));
                 helpStage.show();
             } catch (IOException ex) {
                 ex.printStackTrace();

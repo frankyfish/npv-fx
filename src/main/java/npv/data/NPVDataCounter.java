@@ -67,7 +67,6 @@ public class NPVDataCounter {
 
     public void round(int places) {
         for (int i = 0; i < this.funds.length; i++) {
-//            funds[i] = round(funds[i], places);
             r[i] = round(r[i], places);
             a[i] = round(a[i], places);
             npv[i] = round(npv[i], places);

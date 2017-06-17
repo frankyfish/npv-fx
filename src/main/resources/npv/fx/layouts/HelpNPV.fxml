@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#handleControlActions" prefHeight="201.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="290.0">
+         <items>
+            <Pane prefHeight="30.0" prefWidth="258.0">
+               <children>
+                  <Button fx:id="btClose" layoutY="1.0" mnemonicParsing="false" onAction="#handleControlActions" text="Close" />
+               </children>
+            </Pane>
+         </items>
+      </ToolBar>
+      <ImageView fitHeight="25.0" fitWidth="146.0" layoutX="30.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/npv_r.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="104.0" layoutX="31.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/npv_a.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="108.0" layoutX="30.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/npv_npv.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
