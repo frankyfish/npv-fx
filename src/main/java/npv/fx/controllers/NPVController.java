@@ -150,7 +150,7 @@ public class NPVController extends NavigationController implements Initializable
             tfDecimalPlaces.setText("2");//setting default value
         } else if (Integer.valueOf(tfDecimalPlaces.getText()) > 12){
             new UINotification(UINotification.Type.INFO, "The maximum accuracy is reached.",
-                    "accuracy will be ignored, highest possible will be used");
+                    "accuracy will be ignored, highest possible value will be used");
         }
     }
 
